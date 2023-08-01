@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
-import "./styles/App.css";
+import "./App.css";
 
-import Header from "./components/Header";
+import Header from "./components/common/Header";
 
 import Home from "./pages/Home";
 

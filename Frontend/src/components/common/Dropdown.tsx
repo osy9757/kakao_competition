@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Dropdown.css';
+import '../../styles/common/Dropdown.css';
 
 type DropdownProps = {
   visibility: boolean;

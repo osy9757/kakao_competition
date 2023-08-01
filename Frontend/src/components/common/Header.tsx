@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Dropdown from './Dropdown';
-import '../styles/Header.css';
+import '../../styles/common/Header.css';
 
 const Header: React.FC = () => {
   const [isTravelDropdownVisible, setTravelDropdownVisible] = useState(false);
