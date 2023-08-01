@@ -12,7 +12,6 @@ src/
  │   └──api/  비동기 api 호출 함수 관리
  ├── pages/
  │   └── 페이지들 ~~
- │
  ├── hooks/ ( 반응형 pages 구성 hook 관리)
  │
  ├── App.tsx
