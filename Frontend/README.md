@@ -1,3 +1,22 @@
+# 폴더 구조
+```
+src/
+ ├── components/
+ │   └── common/ (버튼같은 공통적으로 사용되는 components를 모아두면 될 것 같습니다.)
+ │   └── pages/ ( 각 페이지별 사용될 컴포넌
+ ├── styles/
+ │   └── css파일들 전부 여기서 관리해도 괜찮을까요?
+ ├── lib/
+ │   └──types/  .ts 파일만 두어 타입 관리
+ │   └──api/  비동기 api 호출 함수 관리
+ └── pages/
+     └── .ts 파일만 두어 타입 관리
+```
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
