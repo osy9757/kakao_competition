@@ -3,7 +3,7 @@
 src/
  ├── components/
  │   └── common/ (버튼같은 공통적으로 사용되는 components를 모아두면 될 것 같습니다.)
- │   └── pages/ ( 각 페이지별 사용될 컴포넌
+ │   └── pages/ ( 각 페이지별 사용될 컴포넌트 )
  ├── styles/
  │   └── common/ 
  │   └── pages/
@@ -12,6 +12,8 @@ src/
  │   └──api/  비동기 api 호출 함수 관리
  ├── pages/
  │   └── 페이지들 ~~
+ │
+ ├── hooks/ ( 반응형 pages 구성 hook 관리)
  │
  ├── App.tsx
  ├── App.css
