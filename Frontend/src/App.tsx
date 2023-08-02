@@ -37,7 +37,7 @@ const App: React.FC = () => {
           <Route path="/postreview/:id" element={<PostReview />} />
           {/* 로그인 */}
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/lgin" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/findpwd" element={<FindPWD />} />
           {/* 마이페이지 */}
           <Route path="/userinfo" element={<UserInfo />} />

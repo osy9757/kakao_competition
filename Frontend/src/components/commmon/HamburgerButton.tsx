@@ -1,4 +1,4 @@
-import "./HambuergerButton.css";
+import "../../style/common/HamburgerButton.css";
 import { Fragment, useState } from "react";
 
 // nav바 사용할떄 isActive를 prop으로 해서 받아 사용하면 좋을것 같아 추가해 두었습니다.
