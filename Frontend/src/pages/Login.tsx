@@ -11,7 +11,7 @@ const Login: React.FC = () => {
     navigate("/findpwd");
   };
   const to_signup = (): void => {
-    navigate("/suginup");
+    navigate("/signup");
   };
 
   return (
