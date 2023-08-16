@@ -4,14 +4,14 @@ body {
 }
 a {
   text-decoration: none;
-  color: black; 
+  color: white; 
 }
 a:visited {
-  color: black;
+  color: white;
   text-decoration: none;
 }
 a:active {
-  color: black;
+  color: white;
 }
 .navbar {
   display: flex;
@@ -68,6 +68,7 @@ a:active {
 
 .dropdown:hover .dropdown-options {
   display: block;
+  color: black;
 }
 
 .dropdown-options a {
