@@ -1,0 +1,33 @@
+.login {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.space_or {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 300px;
+  margin: 10px 0;
+}
+
+.space_or::before,
+.space_or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: black;
+}
+
+.space_or span {
+  margin: 0 10px;
+}
+
+.find_signup {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

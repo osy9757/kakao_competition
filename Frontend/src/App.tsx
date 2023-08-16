@@ -1,4 +1,5 @@
 import React from "react";
+
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import "./App.css";
@@ -18,6 +19,8 @@ import LikePlaces from "./pages/LikePlaces";
 import LikeUsers from "./pages/LikeUsers";
 import PostReview from "./pages/PostReview";
 
+import Example from "./pages/Example";
+
 const App: React.FC = () => {
   return (
     <BrowserRouter>
@@ -34,12 +37,14 @@ const App: React.FC = () => {
           <Route path="/postreview/:id" element={<PostReview />} />
           {/* 로그인 */}
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/lgin" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/findpwd" element={<FindPWD />} />
           {/* 마이페이지 */}
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/likeplaces" element={<LikePlaces />} />
           <Route path="/likeusers" element={<LikeUsers />} />
+          {/* 컴포넌트 연습 페이지 */}
+          <Route path="/example" element={<Example />} />
         </Routes>
         {/* <Footer /> */}
       </div>
