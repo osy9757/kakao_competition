@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import "./App.css";
 
+import Header from "./components/common/Header";
+
 import Home from "./pages/Home";
 
 import FromeImgae from "./pages/FromImgae";
@@ -25,6 +27,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <div className="App">
+        <Header /> {/* Render the Header */}
         <Routes>
           {/* / 으로 접근하든 /main 으로 접근하든 홈으로 이동할 수 있게 설정 */}
           <Route path="/" element={<Navigate to="/main" replace />} />
