@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SignUp3Props } from "../../lib/types/signup";
+import { SignUp3Props } from "../../../lib/types/signup";
 
 const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
   // 회원가입 폼

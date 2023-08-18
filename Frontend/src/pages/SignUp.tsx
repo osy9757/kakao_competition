@@ -1,7 +1,7 @@
 import { useState } from "react";
-import SignUp1 from "../components/pages/SignUp1";
-import SignUp2 from "../components/pages/SignUp2";
-import SignUp3 from "../components/pages/SignUp3";
+import SignUp1 from "../components/pages/signup/SignUp1";
+import SignUp2 from "../components/pages/signup/SignUp2";
+import SignUp3 from "../components/pages/signup/SignUp3";
 
 const SignUp = () => {
   // 화면전환 step  / 약관동의 -> 번호인증 -> 회원가입 Form

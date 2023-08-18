@@ -1,5 +1,5 @@
 import axios from "axios";
-import HamburgerButton from "../components/commmon/HamburgerButton";
+import HamburgerButton from "../components/common/HamburgerButton";
 
 const Example = () => {
   const clickHandle = () => {

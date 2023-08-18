@@ -1,8 +1,8 @@
 import React, { ChangeEvent } from "react";
 
-import TermsInput from "../../hooks/TermsInput";
+import TermsInput from "../../../hooks/TermsInput";
 
-import { SignUp1Props } from "../../lib/types/signup";
+import { SignUp1Props } from "../../../lib/types/signup";
 
 const SignUp1: React.FC<SignUp1Props> = ({
   onClick,
