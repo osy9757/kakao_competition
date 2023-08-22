@@ -1,7 +1,7 @@
 import "../style/pages/Login.css";
 
-import LoginForm from "../components/pages/LoginFrom";
-import KakaoLogin from "../components/pages/Kakao";
+import LoginForm from "../components/pages/login/LoginFrom";
+import KakaoLogin from "../components/pages/login/Kakao";
 import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {

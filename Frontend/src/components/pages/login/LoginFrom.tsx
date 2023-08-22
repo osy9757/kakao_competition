@@ -1,7 +1,7 @@
-import "../../style/pages/LoginForm.css";
+import "../../../style/pages/LoginForm.css";
 
 import React, { useState } from "react";
-import { Login } from "../../lib/types/login";
+import { Login } from "../../../lib/types/login";
 
 type login = Login;
 

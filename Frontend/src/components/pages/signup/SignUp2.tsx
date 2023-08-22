@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import axios from "axios";
-import { SignUp2Props } from "../../lib/types/signup";
+import { SignUp2Props } from "../../../lib/types/signup";
 
 const SignUp2: React.FC<SignUp2Props> = ({
   onClick,
