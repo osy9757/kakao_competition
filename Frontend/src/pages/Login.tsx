@@ -1,4 +1,4 @@
-import "../style/pages/Login.css";
+import "../styles/pages/Login.css";
 
 import LoginForm from "../components/pages/login/LoginFrom";
 import KakaoLogin from "../components/pages/login/Kakao";

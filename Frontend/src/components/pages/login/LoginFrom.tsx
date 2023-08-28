@@ -1,4 +1,4 @@
-import "../../../style/pages/LoginForm.css";
+import "../../../styles/pages/LoginForm.css";
 
 import React, { useState } from "react";
 import { Login } from "../../../lib/types/login";
