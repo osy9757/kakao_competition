@@ -1,0 +1,282 @@
+/* FindPlace.tsx */
+
+.findplace {
+  background-color: #79c2df;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 300px;
+  align-items: center;
+}
+
+.placecontainer {
+  width: 65vw;
+  height: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  width: 50%;
+  height: 100%;
+}
+
+.tourinfo {
+  font-family: "Song Myung";
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.searchcontainer {
+  display: flex;
+  height: 20%;
+  background-color: white;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.placesearch {
+  margin-left: 5px;
+  width: 65%;
+  height: 50%;
+  border: 1px solid rgb(233, 236, 239);
+  border-radius: 5px;
+}
+
+.searchbtn {
+  margin-left: 5px;
+  width: 25%;
+  height: 50%;
+  border: 0px solid;
+  border-radius: 12px;
+  text-align: center;
+  background-color: rgb(26, 55, 77);
+  color: white;
+}
+
+.tourimg {
+  border-radius: 130px;
+  width: 300px;
+  height: 370px;
+  object-fit: cover;
+  box-shadow: 10px 10px 10px gray;
+}
+
+/* OurService.tsx */
+.oursevice {
+  margin-top: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.servicetext {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.h2_service {
+  justify-items: center;
+  font-family: "Source Serif 4";
+}
+
+.servicerow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 800px;
+  margin-top: 20px;
+}
+
+.serviceimg,
+.servicetext1,
+.servicetext2 {
+  width: 220px;
+  height: 300px;
+  border: 1px solid gray;
+  border-radius: 6px;
+}
+
+.servicetext1,
+.servicetext2 {
+  background-color: #f4f5f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlaybutton {
+  display: none;
+}
+
+.changeimage {
+  width: 220px;
+  height: 300px;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.serviceimg {
+  position: relative;
+  width: 220px;
+  height: 300px;
+  overflow: hidden;
+}
+
+.changeimage {
+  width: 220px;
+  height: 300px;
+}
+
+.overlaybutton {
+  display: block; /* display 속성 변경 */
+  opacity: 0; /* 초기 투명도 */
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px); /* 버튼을 조금 아래로 움직여 초기 위치 설정 */
+  transition: opacity 0.3s, transform 0.3s; /* 애니메이션 효과 설정 */
+}
+
+.serviceimg:hover .overlaybutton {
+  opacity: 1; /* 완전 불투명으로 설정 */
+  transform: translateX(-50%) translateY(0); /* 원래 위치로 돌아옴 */
+}
+
+.serviceimg:hover .changeimage {
+  transform: scale(1.05); /* 이미지 변경 시 확대 효과 */
+}
+
+/* populardestination.tsx */
+.populardestination {
+  height: 400px;
+  margin-top: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageslider {
+  width: 100%;
+  display: flex;
+}
+
+.imgcarousel {
+  display: flex;
+}
+
+.siteimg {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* SimpleSlider */
+.imageslider {
+  display: flex;
+  justify-content: center;
+}
+
+.slick-slider {
+  width: 1200px;
+  margin-left: 0px;
+}
+
+.slick-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+}
+
+.slick-prev {
+  left: 0;
+  content: "<";
+}
+
+.slick-next {
+  right: 0;
+  content: ">";
+}
+
+.slick-dots {
+  /*li동그라미없애기  */
+  list-style: none;
+  display: block;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  bottom: 40px;
+  padding: 0 0 0 0;
+}
+
+.slick-dots li {
+  /* 123버튼이 옆으로 붙는다 */
+  display: inline-block;
+  /* 너무 붙어있어서 마진준다 */
+  margin: 5px;
+  width: 15px;
+  height: 15px;
+  margin-top: 30px;
+}
+
+.slick-dots li button {
+  /* 버튼테두리없애주기 */
+  border: none;
+  /* 버튼배경투명색으로 */
+  background-color: #cccccc;
+  /* font-size : 0을 주면 글자가 보이지 않는다 */
+  font-size: 0;
+  /* 크기 */
+  width: 10px;
+  height: 10px;
+  /* 버튼동그랗게 */
+  border-radius: 50%;
+}
+
+.slick-dots li.slick-active button {
+  /*slick-active버튼색바꾸기선택된부분진하게된다*/
+  background-color: #1a374d;
+}
+
+.caroimgs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.siteimg {
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Subscribe */
+.subs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
+  height: 300px;
+  background-color: #79c2df;
+}
+
+.subsbtn {
+  width: 130px;
+  height: 50px;
+  border-radius: 30px;
+  border: 3px solid white;
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}

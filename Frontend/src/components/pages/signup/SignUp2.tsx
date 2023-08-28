@@ -104,7 +104,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
       ) : (
         <></>
       )}
-      {/* <button onClick={onClick}>step이동</button> */}
+      <button onClick={onClick}>step이동</button>
     </div>
   );
 };
