@@ -55,13 +55,14 @@ const LoginForm: React.FC = () => {
     <div className="loginform">
       <form>
         <div>
+          <label>이메일</label>
           <input
             type="email"
             id="email"
             className="email"
             value={loginForm.email}
             onChange={handleInputChange}
-            placeholder="이메일 주소"
+            placeholder="이메일을 입력해주세요."
             required
           />
           {/* <a href="https://www.freepik.com/icon/email_542638">
@@ -74,6 +75,7 @@ const LoginForm: React.FC = () => {
           )}
         </div>
         <div>
+          <label>비밀번호</label>
           <input
             type="password"
             id="password"
@@ -81,7 +83,7 @@ const LoginForm: React.FC = () => {
             value={loginForm.password}
             onChange={handleInputChange}
             required
-            placeholder="비밀번호"
+            placeholder="비밀번호를 입력해주세요."
             minLength={8}
           />
           {/* <a href="https://www.freepik.com/icon/padlock_2889676">
@@ -89,8 +91,8 @@ const LoginForm: React.FC = () => {
           </a> */}
           {pwdCheck ? <p className="checkmessage">{pwdMessage} </p> : <p></p>}
         </div>
-        <button type="submit" className="LoginButton">
-          Login
+        <button type="submit" className="loginButton">
+          LOGIN
         </button>
       </form>
     </div>

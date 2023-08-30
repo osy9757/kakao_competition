@@ -2,3 +2,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Song+Myung&display=swap");
 /* Source Serif 4 */
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Song+Myung&family=Source+Serif+4:opsz@8..60&display=swap");
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 최소 높이를 뷰포트 높이와 같게 설정 */
+}
+
+.content {
+  flex: 1; /* 남아있는 공간을 차지하도록 설정 */
+}

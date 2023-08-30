@@ -17,7 +17,7 @@
 }
 
 .email {
-  width: 280px;
+  width: 290px;
   height: 25px;
   background-image: url("../../../public/assets/email_icon.png");
   background-size: 16px 16px; /* 이미지 크기 설정 */
@@ -29,7 +29,7 @@
 }
 
 .password {
-  width: 280px;
+  width: 290px;
   height: 25px;
   background-image: url("../../../public/assets/password_icon.png");
   background-size: 16px 16px; /* 이미지 크기 설정 */
@@ -45,6 +45,13 @@
   font-weight: 500;
   font-size: 11px;
   margin-left: 10px;
+}
+
+.loginButton {
+  width: 320px;
+  height: 25px;
+  font-size: 16px;
+  border-radius: 12px;
 }
 
 @media (max-width: 768px) {
