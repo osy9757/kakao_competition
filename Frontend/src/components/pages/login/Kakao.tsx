@@ -14,6 +14,13 @@ const KakaoLogin: React.FC = () => {
         <img
           src={process.env.PUBLIC_URL + `assets/kakao_web.png`}
           alt="kakao_login"
+          style={{
+            height: "35px",
+            width: "290px",
+            objectFit: "cover",
+            borderRadius: "12px",
+            marginTop: "10px",
+          }}
         />
       </a>
     </div>

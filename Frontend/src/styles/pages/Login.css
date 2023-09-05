@@ -1,8 +1,24 @@
+.App {
+  background-color: #f8f9fa;
+}
+
+.sevice_login {
+  margin-top: -50px;
+  display: flex;
+  justify-content: center;
+  height: 600px;
+}
+
 .login {
-  margin-top: 100px;
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 12px;
+  width: 500px;
+  height: 530px;
+  background-color: white;
+  padding-top: 10px;
 }
 
 .space_or {

@@ -1,7 +1,9 @@
 import "../../../styles/pages/LoginForm.css";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Login } from "../../../lib/types/login";
+import KakaoLogin from "./Kakao";
 
 type login = Login;
 
@@ -51,50 +53,62 @@ const LoginForm: React.FC = () => {
     }
   };
 
+  // pwd handler
+  const navigate = useNavigate();
+  const pwdHandler = () => {
+    navigate("/findpwd");
+  };
+
   return (
     <div className="loginform">
-      <form>
-        <div>
-          <label>이메일</label>
-          <input
-            type="email"
-            id="email"
-            className="email"
-            value={loginForm.email}
-            onChange={handleInputChange}
-            placeholder="이메일을 입력해주세요."
-            required
-          />
-          {/* <a href="https://www.freepik.com/icon/email_542638">
-            Icon by Freepik
-          </a> */}
-          {emailCheck ? (
-            <p className="checkmessage">{emailMessage}</p>
-          ) : (
-            <p></p>
-          )}
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <input
-            type="password"
-            id="password"
-            className="password"
-            value={loginForm.password}
-            onChange={handleInputChange}
-            required
-            placeholder="비밀번호를 입력해주세요."
-            minLength={8}
-          />
-          {/* <a href="https://www.freepik.com/icon/padlock_2889676">
-            Icon by Freepik
-          </a> */}
-          {pwdCheck ? <p className="checkmessage">{pwdMessage} </p> : <p></p>}
-        </div>
-        <button type="submit" className="loginButton">
-          LOGIN
-        </button>
-      </form>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <label style={{ fontSize: "14px" }}>이메일</label>
+        <input
+          type="email"
+          id="email"
+          className="email"
+          value={loginForm.email}
+          onChange={handleInputChange}
+          placeholder="이메일을 입력해주세요."
+          required
+        />
+        {/* <a target="_blank" href="https://icons8.com/icon/86305/person">Person</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */}
+        {emailCheck ? <p className="checkmessage">{emailMessage}</p> : <p></p>}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <label style={{ fontSize: "14px" }}>비밀번호</label>
+        <input
+          type="password"
+          id="password"
+          className="password"
+          value={loginForm.password}
+          onChange={handleInputChange}
+          required
+          placeholder="비밀번호를 입력해주세요."
+          minLength={8}
+        />
+        {/* <a target="_blank" href="https://icons8.com/icon/82747/lock">Lock</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */}
+        {pwdCheck ? <p className="checkmessage">{pwdMessage} </p> : null}
+      </div>
+      <p className="findpwd" onClick={pwdHandler}>
+        비밀번호를 잃어버리셨나요?
+      </p>
+      <button type="submit" className="loginButton">
+        LOGIN
+      </button>
+      <KakaoLogin />
     </div>
   );
 };
