@@ -16,8 +16,8 @@ const TermsInput: React.FC<TermsInputProps> = ({
   handleCheckboxChange,
 }) => {
   return (
-    <div>
-      <label>
+    <div className="termcheckdiv">
+      <label className="termcheck">
         <input
           type="checkbox"
           name={name}
@@ -29,7 +29,7 @@ const TermsInput: React.FC<TermsInputProps> = ({
       {option ? (
         <label style={{ color: "red" }}>(필수)</label>
       ) : (
-        <label>(선택)</label>
+        <label style={{ color: "#666666" }}>(선택)</label>
       )}
     </div>
   );

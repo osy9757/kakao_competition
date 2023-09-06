@@ -1,0 +1,217 @@
+/* SignUp.tsx */
+
+.signup {
+  display: flex;
+  justify-content: center;
+}
+
+/* SignUp1.tsx */
+
+.step1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  height: 500px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.checkboxes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 230px;
+  margin: 0px 0 35px 35px;
+  flex: 1;
+}
+
+.to_login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  color: #666666;
+}
+
+.all_check {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.termcheck {
+  color: #666666;
+}
+
+.termcheckdiv {
+  margin-bottom: 8px;
+}
+
+.nextbtn {
+  width: 220px;
+  height: 25px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  background-color: #79c2df;
+  margin-top: 20px;
+  align-self: center;
+}
+
+/* SignUp2.tsx */
+.step2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  height: 500px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.step2text {
+  align-self: center;
+  height: 110px;
+}
+
+.step2phone {
+  flex: 1;
+  margin: 0 15px 0 15px;
+  justify-content: center;
+}
+
+.step2number {
+  width: 180px;
+  height: 30px;
+  background-image: url("../../../public/assets/phone_icon.png");
+  background-size: 16px 16px; /* 이미지 크기 설정 */
+  background-repeat: no-repeat;
+  background-position: 4px center; /* 아이콘 위치 조정 */
+  padding-left: 28px; /* Input 텍스트와 아이콘 사이 간격 조정 */
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 10px;
+}
+
+.step2code {
+  width: 180px;
+  height: 30px;
+  background-image: url("../../../public/assets/verify_icon.png");
+  background-size: 16px 16px; /* 이미지 크기 설정 */
+  background-repeat: no-repeat;
+  background-position: 4px center; /* 아이콘 위치 조정 */
+  padding-left: 28px; /* Input 텍스트와 아이콘 사이 간격 조정 */
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 10px;
+}
+
+.verifyform {
+  margin-top: 20px;
+}
+
+.verifybtn {
+  width: 50px;
+  height: 25px;
+  margin-left: 5px;
+  align-self: center;
+  border: none;
+  border-radius: 5px;
+  background-color: #79c2df;
+  color: white;
+}
+
+/* SignUp3.tsx */
+.step3 {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+  width: 300px;
+  height: 500px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.step3text {
+  align-self: center;
+  height: 100px;
+}
+
+.to_login_step3 {
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  color: #666666;
+}
+
+.step3form {
+  height: 380px;
+}
+
+.step3inputdiv {
+  width: 250px;
+}
+
+input[id="email"] {
+  width: 215px;
+  height: 30px;
+  background-image: url("../../../public/assets/email_icon.png");
+  background-size: 16px 16px; /* 이미지 크기 설정 */
+  background-repeat: no-repeat;
+  background-position: 4px center; /* 아이콘 위치 조정 */
+  padding-left: 28px; /* Input 텍스트와 아이콘 사이 간격 조정 */
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 10px;
+}
+
+input[id="password"] {
+  width: 215px;
+  height: 30px;
+  background-image: url("../../../public/assets/verify_icon.png");
+  background-size: 16px 16px; /* 이미지 크기 설정 */
+  background-repeat: no-repeat;
+  background-position: 4px center; /* 아이콘 위치 조정 */
+  padding-left: 28px; /* Input 텍스트와 아이콘 사이 간격 조정 */
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 10px;
+}
+
+.step3nick {
+  display: flex;
+  flex-direction: row;
+}
+
+input[id="nickName"] {
+  width: 155px;
+  height: 30px;
+  background-image: url("../../../public/assets/email_icon.png");
+  background-size: 16px 16px; /* 이미지 크기 설정 */
+  background-repeat: no-repeat;
+  background-position: 4px center; /* 아이콘 위치 조정 */
+  padding-left: 28px; /* Input 텍스트와 아이콘 사이 간격 조정 */
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 10px;
+}
+
+.nicknamecheckbtn {
+  margin-left: 10px;
+  width: 55px;
+  height: 25px;
+  font-size: 8px;
+  font-weight: 600;
+  align-self: center;
+  border: none;
+  border-radius: 5px;
+}

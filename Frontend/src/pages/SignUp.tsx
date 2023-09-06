@@ -3,6 +3,8 @@ import SignUp1 from "../components/pages/signup/SignUp1";
 import SignUp2 from "../components/pages/signup/SignUp2";
 import SignUp3 from "../components/pages/signup/SignUp3";
 
+import "../styles/pages/SignUp.css";
+
 const SignUp = () => {
   // 화면전환 step  / 약관동의 -> 번호인증 -> 회원가입 Form
   const [step, setStep] = useState<number>(1);
@@ -27,29 +29,39 @@ const SignUp = () => {
   switch (step) {
     case 1:
       return (
-        <SignUp1
-          onClick={nextStep}
-          checkboxes={checkboxes}
-          setCheckboxes={setCheckboxes}
-        />
+        <div className="signup">
+          <SignUp1
+            onClick={nextStep}
+            checkboxes={checkboxes}
+            setCheckboxes={setCheckboxes}
+          />
+        </div>
       );
     case 2:
       return (
-        <SignUp2
-          onClick={nextStep}
-          phoneNumber={phoneNumber}
-          setPhoneNumber={setPhoneNumber}
-        />
+        <div className="signup">
+          <SignUp2
+            onClick={nextStep}
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
+          />
+        </div>
       );
     case 3:
-      return <SignUp3 checkboxes={checkboxes} phoneNumber={phoneNumber} />;
+      return (
+        <div className="signup">
+          <SignUp3 checkboxes={checkboxes} phoneNumber={phoneNumber} />
+        </div>
+      );
     default:
       return (
-        <SignUp1
-          onClick={nextStep}
-          checkboxes={checkboxes}
-          setCheckboxes={setCheckboxes}
-        />
+        <div className="signup">
+          <SignUp1
+            onClick={nextStep}
+            checkboxes={checkboxes}
+            setCheckboxes={setCheckboxes}
+          />
+        </div>
       );
   }
 };
