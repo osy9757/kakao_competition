@@ -341,13 +341,13 @@
 }
 
 /* https://codepen.io/brunjo/pen/ByjRPy */
-h1 {
+.loadingtext {
   position: relative;
   color: #c9dff2;
   font-size: 5em;
 }
 
-h1:before {
+.loadingtext:before {
   content: attr(data-text);
   position: absolute;
   overflow: hidden;

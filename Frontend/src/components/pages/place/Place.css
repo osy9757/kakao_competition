@@ -1,0 +1,74 @@
+/* 최상위 부모 컴포넌트 */
+.tourplace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* PlaceInfo.tsx */
+.placeinfo {
+  /* border: 1px solid gray; */
+  width: 70vw;
+}
+
+.placename {
+  display: flex;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+/* 좋아요 버튼 */
+.heart-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  margin-left: 10px;
+}
+
+.heart-button:not(.liked):hover .heart-icon {
+  stroke: gray;
+}
+
+.heart-button:active {
+  transform: scale(1.2);
+}
+
+.heart-button.liked {
+  animation: pop 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* placeimg */
+.placeimg_wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 3rem;
+}
+
+.placeimg1,
+.placeimg2 {
+  object-fit: cover;
+  width: 47%;
+  border-radius: 3%;
+}
+
+/* palcetext */
+.palcetext {
+  padding-left: 2%;
+  padding-right: 2%;
+  font-size: 1.6rem;
+}

@@ -26,7 +26,11 @@ const LoginHandler = () => {
 
   return (
     <div className="loginhandler">
-      <h1 data-text="로그인 중입니다...." style={{ fontSize: 32 }}>
+      <h1
+        data-text="로그인 중입니다...."
+        style={{ fontSize: 32 }}
+        className="loadingtext"
+      >
         로그인 중입니다....
       </h1>
       <Loading />
