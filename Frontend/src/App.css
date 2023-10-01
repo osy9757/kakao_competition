@@ -19,3 +19,7 @@ html {
 .content {
   flex: 1; /* 남아있는 공간을 차지하도록 설정 */
 }
+
+html {
+  font-size: 62.5%;
+}
