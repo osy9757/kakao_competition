@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { PLACEINRFO } from "../components/pages/place/PlaceInfo";
 import "../components/pages/place/Place.css";
 import { PLACEMAP } from "../components/pages/place/PlaceMap";
+import { COMMENTS } from "../components/pages/place/Comments";
 
 const Place = () => {
   // 여행지 이름을 parameter로 가져오기
@@ -13,6 +14,7 @@ const Place = () => {
       여행지 표시 페이지 Query Parameter기반 {id}
       <PLACEINRFO />
       <PLACEMAP />
+      <COMMENTS />
     </div>
   );
 };
