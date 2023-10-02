@@ -72,3 +72,8 @@
   padding-right: 2%;
   font-size: 1.6rem;
 }
+
+/* PlaceMap.tsx */
+.placemap {
+  width: 70vw;
+}
