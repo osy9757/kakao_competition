@@ -1,0 +1,197 @@
+.content {
+  background-color: white;
+}
+
+/* 최상위 부모 컴포넌트 */
+.tourplace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* PlaceInfo.tsx */
+.placeinfo {
+  /* border: 1px solid gray; */
+  width: 70vw;
+}
+
+.placename {
+  display: flex;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+/* 좋아요 버튼 */
+.heart-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  margin-left: 10px;
+}
+
+.heart-button:not(.liked):hover .heart-icon {
+  stroke: gray;
+}
+
+.heart-button:active {
+  transform: scale(1.2);
+}
+
+.heart-button.liked {
+  animation: pop 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* placeimg */
+.placeimg_wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 3rem;
+}
+
+.placeimg1,
+.placeimg2 {
+  object-fit: cover;
+  width: 47%;
+  border-radius: 3%;
+}
+
+/* palcetext */
+.palcetext {
+  padding-left: 2%;
+  padding-right: 2%;
+  font-size: 1.6rem;
+}
+
+/* PlaceMap.tsx */
+.placemap {
+  width: 70vw;
+}
+
+/* Comments.tsx */
+.commtents_wrapper {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  width: 70vw;
+}
+
+.commenthead {
+  font-size: 2.5rem;
+  color: #848d92;
+}
+
+.comment_input {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  height: 300px;
+  padding: 3% 5% 3% 5%;
+}
+
+.inputbox {
+  width: auto;
+  height: 25rem;
+  resize: none;
+  font-size: 2rem;
+  padding: 10px 10px 10px 10px;
+  border: 2px solid #c9c9c9;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #9e9eb0;
+}
+
+.commentmessage {
+  color: #848d92;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.commentbtn {
+  margin-top: 20px;
+  padding: 15px 10px 15px 10px;
+  width: 25rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #214252;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* 댓글 입력 말고 댓글 들 불러오는 곳 */
+/* Comment.tsx */
+.commentsnum {
+  font-size: 2.3rem;
+  padding-bottom: 10px;
+  width: 100%;
+  border-bottom: 2px solid #e6e6e6;
+}
+
+.comment_wrapper {
+  margin-bottom: 20px;
+}
+
+.infowrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.userthumnail {
+  width: 6%;
+}
+
+.thumnail {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 45%;
+}
+
+.commentinfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.deletebtn {
+  padding: 0 0 0 0;
+  border: none;
+  background-color: white;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.username {
+  margin-top: 0;
+  font-size: 2em;
+}
+
+.commenttime {
+  margin: 0 0 0 0;
+  font-size: 1.6rem;
+  color: #cccccc;
+}
+
+.comment {
+  font-size: 1.8rem;
+}

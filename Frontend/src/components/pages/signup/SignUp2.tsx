@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import axios from "axios";
 import { SignUp2Props } from "../../../lib/types/signup";
+import { useNavigate } from "react-router-dom";
 
 const SignUp2: React.FC<SignUp2Props> = ({
   onClick,
@@ -11,7 +12,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
   const phoneNumberRegex = /^010\d{8}$/;
 
   // 인증번호 보냈을 때만 공개
-  const [verify, setVerify] = useState<boolean>(false);
+  const [verify, setVerify] = useState<boolean>(true);
   const [verifyInput, setVerifyInput] = useState<string>();
   const [verifyCode, setVerifyCode] = useState<string>();
 
@@ -62,49 +63,81 @@ const SignUp2: React.FC<SignUp2Props> = ({
     }
   };
 
+  // nav
+  const navigate = useNavigate();
+
   return (
     <div className="step2">
-      <h2>휴대폰 본인 확인</h2>
-      <p>원활한 서비스 제공을 위해, 휴대폰 번호를 입력해주세요.</p>
-      <label>휴대폰 번호</label>
-      <div>
-        <input
-          type="text"
-          name="tel"
-          value={phoneNumber}
-          pattern="[0-9]+"
-          maxLength={11}
-          onChange={handleInputChange}
-          placeholder="전화번호를 입력해주세요."
-          disabled={verify}
-        />
-        <button onClick={verifyClick}>
-          {!verify ? "인증번호 전송" : "재전송"}
+      <div className="step2text">
+        <h2
+          style={{
+            margin: "40px 0 50px 0",
+            fontSize: "25px",
+            fontFamily: "sans-serif",
+          }}
+        >
+          휴대폰 본인 확인
+        </h2>
+      </div>
+      <div className="step2phone">
+        <label>휴대폰 번호</label>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {/* <a href="https://www.flaticon.com/free-icons/contact" title="contact icons">Contact icons created by Muhamad Ulum - Flaticon</a> */}
+          <input
+            type="text"
+            name="tel"
+            value={phoneNumber}
+            pattern="[0-9]+"
+            maxLength={11}
+            onChange={handleInputChange}
+            placeholder="휴대폰 번호를 입력해주세요."
+            disabled={verify}
+            className="step2number"
+          />
+          <button onClick={verifyClick} className="verifybtn">
+            {!verify ? "인증번호 전송" : "재전송"}
+          </button>
+        </div>
+        {verify ? (
+          <div className="verifyform">
+            <label>인증번호</label>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              {/* <a href="https://www.flaticon.com/free-icons/privacy" title="privacy icons">Privacy icons created by Muhamad Ulum - Flaticon</a> */}
+              <input
+                type="text"
+                placeholder="인증번호를 입력해주세요"
+                value={verifyInput}
+                onChange={handleverifyChange}
+                maxLength={6}
+                className="step2code"
+              />
+              <button onClick={verifyCheck} className="verifybtn">
+                인증
+              </button>
+            </div>
+            {verifyErr ? (
+              <p style={{ color: "red" }}>인증번호를 확인해주세요.</p>
+            ) : (
+              <></>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
+        <button
+          onClick={onClick}
+          className="nextbtn"
+          style={{ margin: "30px 25px 0 25px" }}
+        >
+          다음
         </button>
       </div>
-      {verify ? (
-        <div className="verifyform">
-          <label>인증번호</label>
-          <div>
-            <input
-              type="text"
-              placeholder="인증번호를 입력해주세요"
-              value={verifyInput}
-              onChange={handleverifyChange}
-              maxLength={6}
-            />
-            <button onClick={verifyCheck}>인증</button>
-          </div>
-          {verifyErr ? (
-            <p style={{ color: "red" }}>인증번호를 확인해주세요.</p>
-          ) : (
-            <></>
-          )}
-        </div>
-      ) : (
-        <></>
-      )}
-      <button onClick={onClick}>step이동</button>
+      <div className="to_login">
+        <p>이미 회원이신가요?</p>
+        <p onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
+          로그인
+        </p>
+      </div>
     </div>
   );
 };

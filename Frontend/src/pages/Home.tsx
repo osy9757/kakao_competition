@@ -19,12 +19,12 @@ const Home: React.FC = () => {
 
   return (
     // <BackgroundChanger imageList={images} />;
-    <Fragment>
+    <div style={{ backgroundColor: "white" }}>
       <FindPlace />
       <OurService />
       <PopularDestination />
       <Subscribe />
-    </Fragment>
+    </div>
   );
 };
 

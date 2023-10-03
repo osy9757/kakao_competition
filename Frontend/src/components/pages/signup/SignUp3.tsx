@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SignUp3Props } from "../../../lib/types/signup";
+import { useNavigate } from "react-router-dom";
 
 const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
   // 회원가입 폼
@@ -71,12 +72,24 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
     }
   };
 
+  // nav
+  const navigate = useNavigate();
+
   return (
     <div className="step3">
-      <h2>어서와 한국은 처음이지</h2>
-      <p>회원가입</p>
-      <form>
-        <div>
+      <div className="step3text">
+        <h2
+          style={{
+            margin: "40px 0 50px 0",
+            fontSize: "25px",
+            fontFamily: "sans-serif",
+          }}
+        >
+          회원가입
+        </h2>
+      </div>
+      <div className="step3form">
+        <div className="step3inputdiv">
           <p>이메일</p>
           <input
             type="text"
@@ -91,7 +104,7 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
             <p></p>
           )}
         </div>
-        <div>
+        <div className="step3inputdiv">
           <p>비밀번호</p>
           <input
             type="password"
@@ -106,11 +119,11 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
             <p></p>
           )}
         </div>
-        <div>
+        <div className="step3inputdiv">
           <p>비밀번호 확인</p>
           <input
             type="password"
-            id="passwor"
+            id="password"
             placeholder="비밀번호를 입력해 주세요."
             value={pwdpwd}
             onChange={pwdpwdChange}
@@ -121,19 +134,29 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
             <p></p>
           )}
         </div>
-        <div>
+        <div className="step3inputdiv">
           <p>닉네임</p>
-          <input
-            type="text"
-            id="nicekName"
-            placeholder="닉네임을 입력해 주세요."
-            value={signUpForm.nicekName}
-            onChange={handleInputChange}
-          />
-          <button>중복확인</button>
+          <div className="step3nick">
+            <input
+              type="text"
+              id="nickName"
+              placeholder="닉네임을 입력해 주세요."
+              value={signUpForm.nicekName}
+              onChange={handleInputChange}
+            />
+            <button className="nicknamecheckbtn">중복확인</button>
+          </div>
         </div>
-      </form>
-      <button>회원가입</button>
+        <button className="nextbtn" style={{ marginLeft: "15px" }}>
+          회원가입
+        </button>
+      </div>
+      <div className="to_login_step3">
+        <p>이미 회원이신가요?</p>
+        <p onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>
+          로그인
+        </p>
+      </div>
     </div>
   );
 };

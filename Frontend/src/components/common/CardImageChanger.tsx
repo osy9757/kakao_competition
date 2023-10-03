@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 
 const CardImagChanger: React.FC = () => {
   const images = [
