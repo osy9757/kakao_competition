@@ -7,11 +7,18 @@ const ContentContainer = styled('div')`
 `;
 
 const Content: React.FC = () => {
+    const [userInfo, setUserInfo] = React.useState({
+      nickname: 'John Doe',
+      email: 'john.doe@example.com',
+      phoneNumber: '010-1234-5678',
+      password: '********'
+    });
+
   return (
     <ContentContainer>
-      {/* Display content based on selected navigation item */}
-      {/* For now, it's just a placeholder */}
-      <div>Selected Content Goes Here</div>
+    <div>Nickname: {userInfo.nickname}</div>
+    <div>Email: {userInfo.email}</div>
+    <div>Phone Number: {userInfo.phoneNumber}</div>
     </ContentContainer>
   );
 };
