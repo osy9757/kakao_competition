@@ -12,6 +12,7 @@ export const PLACEINRFO = () => {
       <p>여행 정보 컴포너넌트 (텍스트 및 사진 받아올 예정)</p>
       <div className="placename">
         <h1>여행지 이름</h1>
+        {/* 좋아요 버튼 handler 추가해야함 백엔드 연동 */}
         <button
           className={isLike ? "heart-button liked" : "heart-button"}
           onClick={toggleButtonClick}

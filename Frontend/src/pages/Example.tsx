@@ -1,5 +1,6 @@
 import axios from "axios";
 import HamburgerButton from "../components/common/HamburgerButton";
+import { MULTIPLEMARKER } from "../components/pages/place/MultipleMarker";
 
 const Example = () => {
   const clickHandle = () => {
@@ -18,6 +19,8 @@ const Example = () => {
       {/* 반응형 nav에 사용할 버튼입니다. */}
       <HamburgerButton />
       <button onClick={clickHandle}>문자</button>
+
+      <MULTIPLEMARKER />
     </div>
   );
 };
