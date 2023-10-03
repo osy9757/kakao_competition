@@ -160,7 +160,7 @@
 
 /* populardestination.tsx */
 .populardestination {
-  height: 400px;
+  /* height: 400px; */
   margin-top: 140px;
   display: flex;
   flex-direction: column;
@@ -168,101 +168,8 @@
 }
 
 .imageslider {
-  width: 100%;
-  display: flex;
+  width: 70%;
 }
-
-.imgcarousel {
-  display: flex;
-}
-
-.siteimg {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-}
-
-/* SimpleSlider */
-.imageslider {
-  display: flex;
-  justify-content: center;
-}
-
-.slick-slider {
-  width: 1200px;
-  margin-left: 0px;
-}
-
-.slick-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-}
-
-.slick-prev {
-  left: 0;
-  content: "<";
-}
-
-.slick-next {
-  right: 0;
-  content: ">";
-}
-
-.slick-dots {
-  /*li동그라미없애기  */
-  list-style: none;
-  display: block;
-  width: 100%;
-  text-align: center;
-  position: relative;
-  bottom: 40px;
-  padding: 0 0 0 0;
-}
-
-.slick-dots li {
-  /* 123버튼이 옆으로 붙는다 */
-  display: inline-block;
-  /* 너무 붙어있어서 마진준다 */
-  margin: 5px;
-  width: 15px;
-  height: 15px;
-  margin-top: 30px;
-}
-
-.slick-dots li button {
-  /* 버튼테두리없애주기 */
-  border: none;
-  /* 버튼배경투명색으로 */
-  background-color: #cccccc;
-  /* font-size : 0을 주면 글자가 보이지 않는다 */
-  font-size: 0;
-  /* 크기 */
-  width: 10px;
-  height: 10px;
-  /* 버튼동그랗게 */
-  border-radius: 50%;
-}
-
-.slick-dots li.slick-active button {
-  /*slick-active버튼색바꾸기선택된부분진하게된다*/
-  background-color: #1a374d;
-}
-
-.caroimgs {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.siteimg {
-  width: 250px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
 /* Subscribe */
 .subs {
   display: flex;
