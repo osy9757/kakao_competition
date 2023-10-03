@@ -6,6 +6,7 @@ interface LabelContainerProps {
 }
 
 const StyledLabelContainer = styled('div')`
+  font-size : 40px;
   padding: 16px;
   border: 1px solid #ccc;
   border: none;  

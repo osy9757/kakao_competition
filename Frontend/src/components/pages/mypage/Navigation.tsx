@@ -17,16 +17,17 @@ const RowWithLogo = styled('div')`
   align-items: center;
   gap: 16px; 
   padding: 8px 16px;
+  font-size: 20px;
 `;
 
 const Logo = styled.img<LogoProps>`
-  width: ${props => props.width || '30px'};
-  height: ${props => props.height || '30px'};
+  width: ${props => props.width || '40px'};
+  height: ${props => props.height || '40px'};
 `;
 
 const ServiceName = styled('h2')`
   margin: 0;
-  
+  font-size : 30px;
 `;
 
 const NavLink = styled('div')`
@@ -59,19 +60,19 @@ interface LogoProps {
           <ServiceName>Service 이름</ServiceName>
         </RowWithLogo>
         <RowWithLogo as={NavLink} onClick={() => onSelect('내정보')}>
-          <Logo src="/logo192.png" alt="내정보 Logo" width="20px" height="20px" />
+          <Logo src="/logo192.png" alt="내정보 Logo" width="25px" height="25px" />
           내정보
         </RowWithLogo>
         <RowWithLogo as={NavLink} onClick={() => onSelect('좋아요 누른 사진')}>
-          <Logo src="/logo192.png" alt="좋아요 누른 사진 Logo" width="20px" height="20px" />
+          <Logo src="/logo192.png" alt="좋아요 누른 사진 Logo" width="25px" height="25px" />
           좋아요 누른 사진
         </RowWithLogo>
         <RowWithLogo as={NavLink} onClick={() => onSelect('FAQ')}>
-          <Logo src="/logo192.png" alt="FAQ Logo" width="20px" height="20px" />
+          <Logo src="/logo192.png" alt="FAQ Logo" width="25px" height="25px" />
           FAQ
         </RowWithLogo>
         <RowWithLogo as={NavLink} onClick={() => onSelect('약관')}>
-          <Logo src="/logo192.png" alt="약관 Logo" width="20px" height="20px" />
+          <Logo src="/logo192.png" alt="약관 Logo" width="25px" height="25px" />
           약관
         </RowWithLogo>
       </NavigationContainer>

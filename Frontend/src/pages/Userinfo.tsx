@@ -55,16 +55,26 @@ const MyPage: React.FC = () => {
     }
   };
 
+  const renderTopGrid = () => {
+    if (selectedLabel === 'FAQ' || selectedLabel === '약관') {
+      return renderContent();
+    }
+
+    return (
+      <TopGrid>
+        <Content />
+        {renderContent()}
+      </TopGrid>
+    );
+  };
+
   return (
     <Container>
       <GridContainer>
         <Navigation onSelect={setSelectedLabel} />
         <RightGrid>
           <LabelContainer label={selectedLabel} />
-          <TopGrid>
-            <Content />
-            {renderContent()}
-          </TopGrid>          
+          {renderTopGrid()}          
         </RightGrid>
       </GridContainer>
     </Container>
