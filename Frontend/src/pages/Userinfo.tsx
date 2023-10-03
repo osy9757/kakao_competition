@@ -13,7 +13,7 @@ const Container = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh; 
+  height: 80vh; 
 `;
 
 const GridContainer = styled('div')`
@@ -21,6 +21,7 @@ const GridContainer = styled('div')`
   grid-template-columns: 1fr 3fr;
   gap: 16px;
   width: 100%; 
+  height: 90%;
   max-width: 1500px; 
 `;
 
