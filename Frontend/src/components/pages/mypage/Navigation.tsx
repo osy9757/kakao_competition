@@ -59,9 +59,9 @@ interface LogoProps {
           <Logo src="/logo192.png" alt="Service Logo" />
           <ServiceName>Service 이름</ServiceName>
         </RowWithLogo>
-        <RowWithLogo as={NavLink} onClick={() => onSelect('내정보')}>
+        <RowWithLogo as={NavLink} onClick={() => onSelect('내 정보')}>
           <Logo src="/logo192.png" alt="내정보 Logo" width="25px" height="25px" />
-          내정보
+          내 정보
         </RowWithLogo>
         <RowWithLogo as={NavLink} onClick={() => onSelect('좋아요 누른 사진')}>
           <Logo src="/logo192.png" alt="좋아요 누른 사진 Logo" width="25px" height="25px" />
