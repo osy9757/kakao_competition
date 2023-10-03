@@ -9,12 +9,11 @@ import TermsofService from '../components/pages/mypage/TermsofService';
 import UserImage from '../components/pages/mypage/UserImage';
 
 
-
 const Container = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70vh; 
+  height: 50vh; 
 `;
 
 const GridContainer = styled('div')`
@@ -22,7 +21,7 @@ const GridContainer = styled('div')`
   grid-template-columns: 1fr 3fr;
   gap: 16px;
   width: 100%; 
-  max-width: 2000px; 
+  max-width: 1500px; 
 `;
 
 const RightGrid = styled('div')`
@@ -47,9 +46,9 @@ const MyPage: React.FC = () => {
       case '좋아요 누른 사진':
         return <UserImage />;
       case '약관':
-        return <FAQ />;
-      case 'FAQ':
         return <TermsofService />;
+      case 'FAQ':
+        return <FAQ />;
       default:
         return <UserInfo />;
     }

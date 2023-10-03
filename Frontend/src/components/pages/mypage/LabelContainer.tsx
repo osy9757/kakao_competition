@@ -8,6 +8,10 @@ interface LabelContainerProps {
 const StyledLabelContainer = styled('div')`
   padding: 16px;
   border: 1px solid #ccc;
+  border: none;  
+  border-radius: 8px;  
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
 `;
 
 const LabelContainer: React.FC<LabelContainerProps> = ({ label }) => {
