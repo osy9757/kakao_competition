@@ -19,11 +19,13 @@ export const MULTIPLEMARKER = () => {
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [map, setMap] = useState<any | null>(null);
 
+  const [showMarkers, setShowMarkers] = useState(false);
+
   useEffect(() => {
     if (!map) return;
-    const ps = new kakao.maps.services.Places();
+    const ps = new kakao.maps.services.Places(map);
 
-    ps.keywordSearch("이태원 맛집", (data, status, _pagination) => {
+    ps.keywordSearch("맛집", (data, status, _pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -51,34 +53,42 @@ export const MULTIPLEMARKER = () => {
     });
   }, [map]);
 
-  console.log(markers);
-
   return (
-    <Map // 로드뷰를 표시할 Container
-      center={{
-        lat: 37.566826,
-        lng: 126.9786567,
-      }}
-      style={{
-        width: "100%",
-        height: "350px",
-      }}
-      level={3}
-      onCreate={setMap}
-    >
-      <MapTypeControl position={"TOPRIGHT"} />
-      <ZoomControl position={"RIGHT"} />
-      {markers.map((marker) => (
-        <MapMarker
-          key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-          position={marker.position}
-          onClick={() => setInfo(marker)}
-        >
-          {info && info.content === marker.content && (
-            <div style={{ color: "#000" }}>{marker.content}</div>
+    <div>
+      <Map // 로드뷰를 표시할 Container
+        center={{
+          lat: 37.566826,
+          lng: 126.9786567,
+        }}
+        style={{
+          width: "100%",
+          height: "350px",
+        }}
+        level={3}
+        onCreate={setMap}
+      >
+        <MapTypeControl position={"TOPRIGHT"} />
+        <ZoomControl position={"RIGHT"} />
+        {showMarkers &&
+          markers.map(
+            (
+              marker // showMarkers가 true일 때만 마커를 보여줍니다
+            ) => (
+              <MapMarker
+                key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+                position={marker.position}
+                onClick={() => setInfo(marker)}
+              >
+                {info && info.content === marker.content && (
+                  <div style={{ color: "#000" }}>{marker.content}</div>
+                )}
+              </MapMarker>
+            )
           )}
-        </MapMarker>
-      ))}
-    </Map>
+      </Map>
+      <button onClick={() => setShowMarkers((prev) => !prev)}>
+        마커 보여주기
+      </button>
+    </div>
   );
 };
