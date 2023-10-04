@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import welcome.travel.jwt.JwtAuthenticationFilter;
+import welcome.travel.jwt.JwtTokenProvider;
 
 import java.util.List;
 
@@ -46,10 +48,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(request -> getCorsConfiguration()))
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf().disable()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .requestMatchers("/login/oauth2/callback/kakao", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/login/oauth2/callback/kakao", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
