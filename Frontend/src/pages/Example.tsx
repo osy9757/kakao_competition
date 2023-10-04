@@ -1,6 +1,7 @@
 import axios from "axios";
 import HamburgerButton from "../components/common/HamburgerButton";
 import { MULTIPLEMARKER } from "../components/pages/place/MultipleMarker";
+import useFetch from "../hooks/useFetch";
 
 const Example = () => {
   const clickHandle = () => {
