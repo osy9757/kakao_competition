@@ -3,6 +3,7 @@ package welcome.travel.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import welcome.travel.dto.KakaoTokenDto;
 import welcome.travel.dto.LoginResponseDto;
@@ -11,7 +12,8 @@ import welcome.travel.service.AuthService;
 import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
-@RestController("login/oauth2")
+@RestController
+@RequestMapping("/login/oauth2")
 public class Oauth {
     private final AuthService authService;
 
