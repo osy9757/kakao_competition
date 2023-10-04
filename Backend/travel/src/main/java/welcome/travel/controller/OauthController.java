@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/login/oauth2")
-public class Oauth {
+public class OauthController {
     private final AuthService authService;
 
     @GetMapping("/callback/kakao")
