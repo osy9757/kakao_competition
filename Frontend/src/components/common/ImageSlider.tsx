@@ -8,17 +8,17 @@ const MultipleItems = () => {
         <img
           src="/img1.jpg"
           alt="popular tour place 1"
-          style={{ width: "33.33%" }}
+          style={{ width: "33.33%", minHeight: "132px" }}
         />
         <img
           src="/img2.jpg"
           alt="popular tour place 2"
-          style={{ width: "33.33%" }}
+          style={{ width: "33.33%", minHeight: "132px" }}
         />
         <img
           src="/img3.jpg"
           alt="popular tour place 3"
-          style={{ width: "33.33%" }}
+          style={{ width: "33.33%", minHeight: "132px" }}
         />
         <Typography
           align="left"
@@ -83,17 +83,17 @@ const MultipleItems = () => {
         <img
           src="/img4.jpg"
           alt="popular tour place 4"
-          style={{ width: "33.33%" }}
+          style={{ width: "33.33%", minHeight: "132px" }}
         />
         <img
           src="/img5.jpg"
           alt="popular tour place 5"
-          style={{ width: "33.33%" }}
+          style={{ width: "33.33%", minHeight: "132px" }}
         />
         <img
           src="/img6.jpg"
           alt="popular tour place 6"
-          style={{ width: "33.33%" }}
+          style={{ width: "33.33%", minHeight: "132px" }}
         />
         <Typography
           align="left"
