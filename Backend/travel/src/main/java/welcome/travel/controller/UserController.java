@@ -67,6 +67,7 @@ public class UserController {
             errorMap.put("message", errorMessage.toString());
 
             return ResponseEntity.badRequest().body(errorMap);
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
         }
 
         String encodedPassword = passwordEncoder.encode(userSignUpRequestDto.getPassword());

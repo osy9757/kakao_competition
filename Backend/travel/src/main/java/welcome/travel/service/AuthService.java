@@ -10,24 +10,34 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import welcome.travel.domain.User;
 import welcome.travel.dto.KakaoAccountDto;
+import welcome.travel.dto.KakaoLoginResponseDto;
 import welcome.travel.dto.KakaoTokenDto;
-import welcome.travel.dto.LoginResponseDto;
 import welcome.travel.domain.Account;
+import welcome.travel.jwt.JwtTokenProvider;
+import welcome.travel.jwt.TokenInfo;
 import welcome.travel.repository.AccountRepository;
-
-import javax.validation.Valid;
+import welcome.travel.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class AuthService {
     private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final JwtTokenProvider jwtTokenProvider;
+    private static final String defaultpassword = "0000";
+    private Boolean flag = false;
 
     @Value("${kakao.KAKAO_CLIENT_ID}")
     private String KAKAO_CLIENT_ID;
@@ -85,28 +95,58 @@ public class AuthService {
         return kakaoTokenDto;
     }
 
-    public ResponseEntity<LoginResponseDto> kakaoLogin(KakaoTokenDto kakaoAccessTokenInfo) {
+    @Transactional
+    public KakaoLoginResponseDto kakaoLogin(KakaoTokenDto kakaoAccessTokenInfo) {
         String kakaoAccessToken = kakaoAccessTokenInfo.getAccess_token();
 
         // 토큰 기반으로 유저 정보 획득
         Account account = getKakaoInfo(kakaoAccessToken);
+        String kakaoEmail = account.getEmail();
+        String kakaoNickName = account.getKakaoName();
+        User user = User.builder()
+                .email(kakaoEmail)
+                .nickname(kakaoNickName)
+                .password(defaultpassword)
+                .build();
+        user.getRoles().add("KAKAO");
 
-        LoginResponseDto loginResponseDto = new LoginResponseDto();
+        // 회원가입인 경우 DB에 저장
+        User existUser = userRepository.findByEmail(user.getEmail()).orElse(null);
+
+//        LoginResponseDto loginResponseDto = new LoginResponseDto();
 //        loginResponseDto.setLoginSuccess(true);
-        Account existMember = accountRepository.findById(account.getId()).orElse(null);
+        // 유저가 존재하지 않을 경우 회원가입
+        if (existUser == null) {
+            flag = true;
+            userRepository.save(user);
 
-        // 유저가 존재할 경우
-        if (existMember != null) {
-//            loginResponseDto.setAccount(account);
-            loginResponseDto.setFlag(true);
-            loginResponseDto.setToken(kakaoAccessToken);
-        } else {
-//            loginResponseDto.setAccount(account);
-            loginResponseDto.setFlag(false);
-            loginResponseDto.setToken(kakaoAccessToken);
         }
 
-        return ResponseEntity.ok().body(loginResponseDto);
+        // 유저 정보 바탕으로 자체토큰 생성
+        // 위에 String kakaoEmail
+
+
+        // Spring Security는 사용자 검증을 위해
+        // encoding된 password와 그렇지 않은 password를 비교
+
+        // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
+        // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(kakaoEmail, defaultpassword);
+
+        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
+        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        // 3. 인증 정보를 기반으로 JWT 토큰 생성
+        TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
+        KakaoLoginResponseDto kakaoLoginResponseDto = new KakaoLoginResponseDto();
+        kakaoLoginResponseDto.setTokenInfo(tokenInfo);
+        kakaoLoginResponseDto.setFlag(flag);
+
+        return kakaoLoginResponseDto;
+
+
 
 
 
@@ -154,15 +194,20 @@ public class AuthService {
             e.printStackTrace();
         }
 
-        // 회원가입 처리하기
-        Long kakaoId = kakaoAccountDto.getId();
-//        Account existOwner = accountRepository.findById(kakaoId).orElse(null);
-
-        // 처음 로그인이 아닌 경우
         return Account.builder()
-                .kakaoId(kakaoAccountDto.getId())
                 .email(kakaoAccountDto.getKakao_account().getEmail())
                 .kakaoName(kakaoAccountDto.getKakao_account().getProfile().getNickname())
                 .build();
+
+//        // 회원가입 처리하기
+//        Long kakaoId = kakaoAccountDto.getId();
+////        Account existOwner = accountRepository.findById(kakaoId).orElse(null);
+//
+//        // 처음 로그인이 아닌 경우
+//        return Account.builder()
+//                .kakaoId(kakaoAccountDto.getId())
+//                .email(kakaoAccountDto.getKakao_account().getEmail())
+//                .kakaoName(kakaoAccountDto.getKakao_account().getProfile().getNickname())
+//                .build();
     }
 }

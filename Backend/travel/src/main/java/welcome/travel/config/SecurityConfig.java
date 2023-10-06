@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/login/oauth2/callback/kakao", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/login/oauth2/callback/kakao", "/swagger-ui/**", "/v3/api-docs/**","/users/signup").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
