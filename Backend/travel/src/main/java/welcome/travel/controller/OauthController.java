@@ -13,11 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/login/oauth2")
 public class OauthController {
     private final AuthService authService;
 
-    @GetMapping("/callback/kakao")
+    @GetMapping("/login/oauth2/callback/kakao")
     public ResponseEntity<LoginResponseDto> kakaoLogin(HttpServletRequest request) {
         String code = request.getParameter("code");
         KakaoTokenDto kakaoAccessToken = authService.getKakaoAccessToken(code);
