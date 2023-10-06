@@ -7,12 +7,13 @@ const SignUp2: React.FC<SignUp2Props> = ({
   onClick,
   phoneNumber,
   setPhoneNumber,
+  is_kakao,
 }) => {
   // 전화번호 정규식
   const phoneNumberRegex = /^010\d{8}$/;
 
   // 인증번호 보냈을 때만 공개
-  const [verify, setVerify] = useState<boolean>(true);
+  const [verify, setVerify] = useState<boolean>(false);
   const [verifyInput, setVerifyInput] = useState<string>();
   const [verifyCode, setVerifyCode] = useState<string>();
 
@@ -35,7 +36,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
       if (!phoneNumberRegex.test(phoneNumber)) {
         window.alert("전화번호를 확인해 주세요!");
       } else {
-        axios(" http://192.168.45.178:8080/app/send", {
+        axios(" http://192.168.1.104:8080/app/send", {
           method: "post",
           headers: {
             "Content-Tye": "application/json",
@@ -57,7 +58,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
     console.log("veriyCode: ", verifyCode);
     console.log("verifyCheck: ", verifyInput);
     if (verifyCode?.toString() === verifyInput) {
-      onClick();
+      setVerify(true);
     } else {
       setVerifyErr(true);
     }
@@ -65,6 +66,15 @@ const SignUp2: React.FC<SignUp2Props> = ({
 
   // nav
   const navigate = useNavigate();
+
+  // next_step 핸들러
+  // 카카오 인 경우와 아닌 경우 설정
+  const nextStepHandler = () => {
+    if (is_kakao) {
+    } else {
+      onClick();
+    }
+  };
 
   return (
     <div className="step2">
@@ -91,7 +101,6 @@ const SignUp2: React.FC<SignUp2Props> = ({
             maxLength={11}
             onChange={handleInputChange}
             placeholder="휴대폰 번호를 입력해주세요."
-            disabled={verify}
             className="step2number"
           />
           <button onClick={verifyClick} className="verifybtn">
@@ -125,7 +134,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
           <></>
         )}
         <button
-          onClick={onClick}
+          onClick={nextStepHandler}
           className="nextbtn"
           style={{ margin: "30px 25px 0 25px" }}
         >

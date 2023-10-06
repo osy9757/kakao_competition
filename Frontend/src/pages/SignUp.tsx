@@ -4,6 +4,7 @@ import SignUp2 from "../components/pages/signup/SignUp2";
 import SignUp3 from "../components/pages/signup/SignUp3";
 
 import "../styles/pages/SignUp.css";
+import { useSelector } from "react-redux";
 
 const SignUp = () => {
   // 화면전환 step  / 약관동의 -> 번호인증 -> 회원가입 Form
@@ -25,6 +26,10 @@ const SignUp = () => {
   // 전화번호
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
 
+  // 카카오 로그인 check
+  // 나중에 type 지정 변경해야 함
+  const kakaoCheck = useSelector((state: any) => state.kako.value);
+
   // step에 따른 화면 변경
   switch (step) {
     case 1:
@@ -44,6 +49,8 @@ const SignUp = () => {
             onClick={nextStep}
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
+            checkboxes={checkboxes}
+            is_kakao={kakaoCheck}
           />
         </div>
       );
