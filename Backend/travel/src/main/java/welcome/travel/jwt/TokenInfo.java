@@ -1,4 +1,4 @@
-package welcome.travel.dto;
+package welcome.travel.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TokenInfo {
+
     private String grantType;
     private String accessToken;
     private String refreshToken;
