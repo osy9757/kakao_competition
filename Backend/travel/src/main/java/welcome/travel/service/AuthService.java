@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,15 +20,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import welcome.travel.domain.User;
 import welcome.travel.dto.KakaoAccountDto;
+import welcome.travel.dto.KakaoLoginResponseDto;
 import welcome.travel.dto.KakaoTokenDto;
-import welcome.travel.dto.LoginResponseDto;
 import welcome.travel.domain.Account;
 import welcome.travel.jwt.JwtTokenProvider;
 import welcome.travel.jwt.TokenInfo;
 import welcome.travel.repository.AccountRepository;
 import welcome.travel.repository.UserRepository;
-
-import javax.validation.Valid;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +37,7 @@ public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private static final String defaultpassword = "0000";
-
+    private Boolean flag = false;
 
     @Value("${kakao.KAKAO_CLIENT_ID}")
     private String KAKAO_CLIENT_ID;
@@ -99,7 +96,7 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenInfo kakaoLogin(KakaoTokenDto kakaoAccessTokenInfo) {
+    public KakaoLoginResponseDto kakaoLogin(KakaoTokenDto kakaoAccessTokenInfo) {
         String kakaoAccessToken = kakaoAccessTokenInfo.getAccess_token();
 
         // 토큰 기반으로 유저 정보 획득
@@ -118,10 +115,11 @@ public class AuthService {
 
 //        LoginResponseDto loginResponseDto = new LoginResponseDto();
 //        loginResponseDto.setLoginSuccess(true);
-
         // 유저가 존재하지 않을 경우 회원가입
         if (existUser == null) {
+            flag = true;
             userRepository.save(user);
+
         }
 
         // 유저 정보 바탕으로 자체토큰 생성
@@ -142,8 +140,11 @@ public class AuthService {
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-//        return ResponseEntity.ok().body(null);
-        return tokenInfo;
+        KakaoLoginResponseDto kakaoLoginResponseDto = new KakaoLoginResponseDto();
+        kakaoLoginResponseDto.setTokenInfo(tokenInfo);
+        kakaoLoginResponseDto.setFlag(flag);
+
+        return kakaoLoginResponseDto;
 
 
 
