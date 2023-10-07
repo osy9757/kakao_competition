@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -36,6 +37,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
     private static final String defaultpassword = "0000";
     private Boolean flag = false;
 
@@ -106,7 +108,7 @@ public class AuthService {
         User user = User.builder()
                 .email(kakaoEmail)
                 .nickname(kakaoNickName)
-                .password(defaultpassword)
+                .password(passwordEncoder.encode(defaultpassword))
                 .build();
         user.getRoles().add("KAKAO");
 
@@ -119,7 +121,6 @@ public class AuthService {
         if (existUser == null) {
             flag = true;
             userRepository.save(user);
-
         }
 
         // 유저 정보 바탕으로 자체토큰 생성
