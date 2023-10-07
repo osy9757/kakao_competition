@@ -37,7 +37,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
       if (!phoneNumberRegex.test(phoneNumber)) {
         window.alert("전화번호를 확인해 주세요!");
       } else {
-        axios(" http://localhost:8080/app/send", {
+        axios(`http://${process.env.REACT_APP_BE_API}/sms/send`, {
           method: "post",
           headers: {
             "Content-Tye": "application/json",
