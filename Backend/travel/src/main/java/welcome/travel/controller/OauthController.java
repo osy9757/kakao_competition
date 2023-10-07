@@ -24,7 +24,7 @@ public class OauthController {
         return authService.kakaoLogin(kakaoAccessToken);
     }
 
-    @PostMapping("/login/aouth2/kakao")
+    @PostMapping("/login/oauth2/kakao")
     public ResponseEntity<?> socialLogin(@RequestHeader("Authorization") String token, @RequestBody SocialLoginRequestDto socialLoginRequestDto) {
         authService.processAfterKakao(token, socialLoginRequestDto);
         return ResponseEntity.status(HttpStatus.OK).build();

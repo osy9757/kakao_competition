@@ -5,6 +5,11 @@ kakao:
   KAKAO_TOKEN_URI: https://kauth.kakao.com/oauth/token
   KAKAO_USER_INFO_URI: https://kapi.kakao.com/v2/user/me
 
+naver-cloud-sms:
+  accessKey: "W0s1NC2b3erxbn7aVvZi"
+  secretKey: "roTKftUeDeoHheevucABbA3ILji941vqKDiMmcPg"
+  serviceId: "ncp:sms:kr:312978310262:kakao_tour_api"
+  senderPhone: "01094276462"
 spring:
   datasource:
     url: jdbc:mysql://welcome2ko.cg9iasli4yrw.ap-northeast-2.rds.amazonaws.com:3306/welcome2ko?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
