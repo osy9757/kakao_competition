@@ -1,12 +1,14 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { SignUp2Props } from "../../../lib/types/signup";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SignUp2: React.FC<SignUp2Props> = ({
   onClick,
   phoneNumber,
   setPhoneNumber,
+  checkboxes,
   is_kakao,
 }) => {
   // 전화번호 정규식
@@ -36,7 +38,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
       if (!phoneNumberRegex.test(phoneNumber)) {
         window.alert("전화번호를 확인해 주세요!");
       } else {
-        axios(" http://192.168.1.104:8080/app/send", {
+        axios(" http://localhost:8080/app/send", {
           method: "post",
           headers: {
             "Content-Tye": "application/json",
@@ -71,10 +73,33 @@ const SignUp2: React.FC<SignUp2Props> = ({
   // 카카오 인 경우와 아닌 경우 설정
   const nextStepHandler = () => {
     if (is_kakao) {
+      axios({
+        method: "post",
+        url: `http://${process.env.REACT_APP_BE_API}/`,
+        data: {
+          agree_info: checkboxes.checkbox3,
+          agree_marketing: checkboxes.checkbox4,
+          phoneNumber: phoneNumber,
+        },
+      })
+        .then((res) => {
+          alert("회원가입 성공!");
+          navigate("/login");
+          console.log("회원가입 성공!");
+        })
+        .catch((err) => {
+          //  err 로직 설정
+          console.log(err);
+        });
     } else {
       onClick();
     }
   };
+
+  // 카카오 사용자 확인을 위한 토큰
+  const kakaoAcess: string = useSelector(
+    (state: any) => state.kakaoAccess.value
+  );
 
   return (
     <div className="step2">
@@ -138,7 +163,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
           className="nextbtn"
           style={{ margin: "30px 25px 0 25px" }}
         >
-          다음
+          {is_kakao ? "정보 입력하기" : "다음"}
         </button>
       </div>
       <div className="to_login">

@@ -28,7 +28,7 @@ const SignUp = () => {
 
   // 카카오 로그인 check
   // 나중에 type 지정 변경해야 함
-  const kakaoCheck = useSelector((state: any) => state.kako.value);
+  const kakaoCheck = useSelector((state: any) => state.kakao.value);
 
   // step에 따른 화면 변경
   switch (step) {

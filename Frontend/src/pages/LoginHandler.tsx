@@ -3,7 +3,8 @@ import Loading from "../components/common/Loading";
 import { useNavigate } from "react-router-dom";
 import "../styles/pages/LoginHandler.css";
 import { useDispatch } from "react-redux";
-import { kakaoSlice } from "../lib/redux/store";
+import { kakaoAccess, kakaoSlice } from "../lib/redux/store";
+import { useEffect } from "react";
 
 const LoginHandler = () => {
   const navigate = useNavigate();
@@ -12,26 +13,38 @@ const LoginHandler = () => {
 
   const dispatch = useDispatch();
 
-  const kakaoLogin = async () => {
-    await axios({
-      method: "GET",
-      url: `${process.env.REACT_APP_KAKAO_REDIRECT_URL}/?code=${code}`,
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-    })
-      .then((res) => {
-        //백에서 완료후 우리사이트 전용 토큰 넘겨주는게 성공했다면
-        console.log(res);
-        // flag확인하하고 route설정하고  카카오 로그인 true로 변경
-        dispatch(kakaoSlice.actions.kakaologin);
-        navigate("/main", { replace: true });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  kakaoLogin();
+  // const kakaoLogin = async () => {
+  //   const param = { code: code };
+  //   await axios({
+  //     method: "GET",
+  //     url: `${process.env.REACT_APP_RE_URL}`,
+  //     params: param,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((res) => {
+  //       //백에서 완료후 우리사이트 전용 토큰 넘겨주는게 성공했다면
+  //       console.log(res.data);
+  //       // dispatch(kakaoAccess.actions.getToken(res.data));
+  //       // // flag확인하하고 route설정하고  카카오 로그인 true로 변경
+  //       // // flag: true 회원가입페이지로 이동
+  //       // if (res.data.flag) {
+  //       //   dispatch(kakaoSlice.actions.kakaologin);
+  //       //   navigate("/signup", { replace: true });
+  //       // } else {
+  //       //   // db에 데이터가 저장돼있는 경우
+  //       //   navigate("/main", { replace: true });
+  //       // }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   kakaoLogin();
+  // }, []);
 
   return (
     <div className="loginhandler">

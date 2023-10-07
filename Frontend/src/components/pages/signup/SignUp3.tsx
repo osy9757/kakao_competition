@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { SignUp3Props } from "../../../lib/types/signup";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
   // 회원가입 폼
   const [signUpForm, setSignUpForm] = useState({
     email: "",
     password: "",
-    nicekName: "",
+    nickname: "",
     phoneNumber: phoneNumber,
-    agree1: checkboxes.checkbox3,
-    agree2: checkboxes.checkbox4,
+    agree_info: checkboxes.checkbox3,
+    agree_marketing: checkboxes.checkbox4,
   });
   const [pwdpwd, setPwdPwd] = useState<string>();
 
@@ -74,6 +75,26 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
 
   // nav
   const navigate = useNavigate();
+
+  // 회원가입
+  const signUpHandler = () => {
+    axios({
+      method: "post",
+      url: `http://${process.env.REACT_APP_BE_API}/users/signup`,
+      data: signUpForm,
+    })
+      .then((res) => {
+        alert("회원가입 성공!");
+        navigate("/login");
+        console.log("회원가입 성공!");
+      })
+      .catch((err) => {
+        //  err 로직 설정
+        console.log(err);
+      });
+  };
+
+  console.log(signUpForm);
 
   return (
     <div className="step3">
@@ -139,15 +160,19 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
           <div className="step3nick">
             <input
               type="text"
-              id="nickName"
+              id="nickname"
               placeholder="닉네임을 입력해 주세요."
-              value={signUpForm.nicekName}
+              value={signUpForm.nickname}
               onChange={handleInputChange}
             />
             <button className="nicknamecheckbtn">중복확인</button>
           </div>
         </div>
-        <button className="nextbtn" style={{ marginLeft: "15px" }}>
+        <button
+          className="nextbtn"
+          style={{ marginLeft: "15px" }}
+          onClick={signUpHandler}
+        >
           회원가입
         </button>
       </div>
