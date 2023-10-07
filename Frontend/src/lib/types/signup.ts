@@ -26,7 +26,6 @@ export type SignUp2Props = {
     checkbox3: boolean;
     checkbox4: boolean;
   };
-  is_kakao: boolean;
 };
 
 export type SignUp3Props = {

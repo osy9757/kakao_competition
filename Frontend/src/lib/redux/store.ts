@@ -18,10 +18,7 @@ export const kakaoSlice = createSlice({
   initialState: { value: false },
   reducers: {
     kakaologin: (state, action) => {
-      state.value = true;
-    },
-    kakaologout: (state, action) => {
-      state.value = false;
+      state.value = action.payload;
     },
   },
 });
@@ -37,7 +34,7 @@ export const kakaoAccess = createSlice({
 });
 
 export const { login, logout } = loginSlice.actions;
-export const { kakaologin, kakaologout } = kakaoSlice.actions; // kakaoSlice에서의 액션도 내보내줍니다.
+export const { kakaologin } = kakaoSlice.actions; // kakaoSlice에서의 액션도 내보내줍니다.
 
 export const store = configureStore({
   reducer: {

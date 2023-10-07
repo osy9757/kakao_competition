@@ -9,7 +9,6 @@ const SignUp2: React.FC<SignUp2Props> = ({
   phoneNumber,
   setPhoneNumber,
   checkboxes,
-  is_kakao,
 }) => {
   // 전화번호 정규식
   const phoneNumberRegex = /^010\d{8}$/;
@@ -69,13 +68,30 @@ const SignUp2: React.FC<SignUp2Props> = ({
   // nav
   const navigate = useNavigate();
 
+  // 카카오 로그인 check
+  // 나중에 type 지정 변경해야 함
+  const kakaoCheck = useSelector((state: any) => state.kakao.value);
+
+  console.log(kakaoCheck);
+
   // next_step 핸들러
   // 카카오 인 경우와 아닌 경우 설정
   const nextStepHandler = () => {
-    if (is_kakao) {
+    if (kakaoCheck) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found in local storage.");
+        return;
+      }
+
+      const parsedToken = JSON.parse(token);
+
       axios({
         method: "post",
         url: `http://${process.env.REACT_APP_BE_API}/`,
+        headers: {
+          Authorization: `Bearer ${parsedToken.accessToken}`,
+        },
         data: {
           agree_info: checkboxes.checkbox3,
           agree_marketing: checkboxes.checkbox4,
@@ -95,11 +111,6 @@ const SignUp2: React.FC<SignUp2Props> = ({
       onClick();
     }
   };
-
-  // 카카오 사용자 확인을 위한 토큰
-  const kakaoAcess: string = useSelector(
-    (state: any) => state.kakaoAccess.value
-  );
 
   return (
     <div className="step2">
@@ -163,7 +174,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
           className="nextbtn"
           style={{ margin: "30px 25px 0 25px" }}
         >
-          {is_kakao ? "정보 입력하기" : "다음"}
+          {kakaoCheck ? "정보 입력하기" : "다음"}
         </button>
       </div>
       <div className="to_login">
