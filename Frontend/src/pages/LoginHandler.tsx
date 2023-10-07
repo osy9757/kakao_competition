@@ -7,6 +7,7 @@ import { kakaologin, kakaoSlice } from "../lib/redux/store";
 import { useEffect } from "react";
 
 const LoginHandler = () => {
+  console.log("LoginHandler rendered");
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
   console.log(code);
@@ -46,6 +47,7 @@ const LoginHandler = () => {
 
   useEffect(() => {
     kakaoLogin();
+    
   }, []);
 
   return (
