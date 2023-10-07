@@ -84,13 +84,11 @@ const SignUp2: React.FC<SignUp2Props> = ({
         return;
       }
 
-      const parsedToken = JSON.parse(token);
-
       axios({
         method: "post",
-        url: `http://${process.env.REACT_APP_BE_API}/`,
+        url: `http://${process.env.REACT_APP_BE_API}/login/aouth2/kakao`,
         headers: {
-          Authorization: `Bearer ${parsedToken.accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
         data: {
           agree_info: checkboxes.checkbox3,
