@@ -1,8 +1,3 @@
-/* Song Myung */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Song+Myung&display=swap");
-/* Source Serif 4 */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Song+Myung&family=Source+Serif+4:opsz@8..60&display=swap");
-
 body,
 html {
   margin: 0;
@@ -23,4 +18,8 @@ html {
 
 html {
   font-size: 62.5%;
+}
+
+.content {
+  font-family: "Nanum Gothic";
 }
