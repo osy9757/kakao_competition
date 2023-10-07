@@ -192,7 +192,7 @@ input[id="password"] {
   flex-direction: row;
 }
 
-input[id="nickName"] {
+input[id="nickname"] {
   width: 155px;
   height: 30px;
   background-image: url("../../../public/assets/email_icon.png");
