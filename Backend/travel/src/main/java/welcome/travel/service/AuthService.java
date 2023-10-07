@@ -24,6 +24,9 @@ import welcome.travel.dto.KakaoAccountDto;
 import welcome.travel.dto.KakaoLoginResponseDto;
 import welcome.travel.dto.KakaoTokenDto;
 import welcome.travel.domain.Account;
+import welcome.travel.dto.SocialLoginRequestDto;
+import welcome.travel.exception.ClientException;
+import welcome.travel.exception.ErrorCode;
 import welcome.travel.jwt.JwtTokenProvider;
 import welcome.travel.jwt.TokenInfo;
 import welcome.travel.repository.AccountRepository;
@@ -55,6 +58,16 @@ public class AuthService {
 
     @Value("${kakao.KAKAO_USER_INFO_URI}")
     private String KAKAO_USER_INFO_URI;
+
+    @Transactional
+    public void processAfterKakao(String token, SocialLoginRequestDto socialLoginRequestDto) {
+        String accessToken = token.substring("Bearer ".length());
+        User user = userRepository.findByEmail(jwtTokenProvider.getEmailFromAccessToken(accessToken)).orElseThrow();
+
+        user.updateKakao(socialLoginRequestDto.getPhoneNumber(), socialLoginRequestDto.getAgree_info(), socialLoginRequestDto.getAgree_marketing());
+
+        userRepository.save(user);
+    }
 
 
     @Transactional
