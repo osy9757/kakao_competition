@@ -20,6 +20,12 @@ export type SignUp2Props = {
   onClick: () => void;
   phoneNumber: string | undefined;
   setPhoneNumber: React.Dispatch<React.SetStateAction<string | undefined>>;
+  checkboxes: {
+    checkbox1: boolean;
+    checkbox2: boolean;
+    checkbox3: boolean;
+    checkbox4: boolean;
+  };
 };
 
 export type SignUp3Props = {

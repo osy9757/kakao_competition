@@ -1,18 +1,20 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { SignUp2Props } from "../../../lib/types/signup";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SignUp2: React.FC<SignUp2Props> = ({
   onClick,
   phoneNumber,
   setPhoneNumber,
+  checkboxes,
 }) => {
   // 전화번호 정규식
   const phoneNumberRegex = /^010\d{8}$/;
 
   // 인증번호 보냈을 때만 공개
-  const [verify, setVerify] = useState<boolean>(true);
+  const [verify, setVerify] = useState<boolean>(false);
   const [verifyInput, setVerifyInput] = useState<string>();
   const [verifyCode, setVerifyCode] = useState<string>();
 
@@ -35,7 +37,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
       if (!phoneNumberRegex.test(phoneNumber)) {
         window.alert("전화번호를 확인해 주세요!");
       } else {
-        axios(" http://192.168.45.178:8080/app/send", {
+        axios(" http://localhost:8080/app/send", {
           method: "post",
           headers: {
             "Content-Tye": "application/json",
@@ -57,7 +59,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
     console.log("veriyCode: ", verifyCode);
     console.log("verifyCheck: ", verifyInput);
     if (verifyCode?.toString() === verifyInput) {
-      onClick();
+      setVerify(true);
     } else {
       setVerifyErr(true);
     }
@@ -65,6 +67,50 @@ const SignUp2: React.FC<SignUp2Props> = ({
 
   // nav
   const navigate = useNavigate();
+
+  // 카카오 로그인 check
+  // 나중에 type 지정 변경해야 함
+  const kakaoCheck = useSelector((state: any) => state.kakao.value);
+
+  console.log(kakaoCheck);
+
+  // next_step 핸들러
+  // 카카오 인 경우와 아닌 경우 설정
+  const nextStepHandler = () => {
+    if (kakaoCheck) {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found in local storage.");
+        return;
+      }
+
+      const parsedToken = JSON.parse(token);
+
+      axios({
+        method: "post",
+        url: `http://${process.env.REACT_APP_BE_API}/`,
+        headers: {
+          Authorization: `Bearer ${parsedToken.accessToken}`,
+        },
+        data: {
+          agree_info: checkboxes.checkbox3,
+          agree_marketing: checkboxes.checkbox4,
+          phoneNumber: phoneNumber,
+        },
+      })
+        .then((res) => {
+          alert("회원가입 성공!");
+          navigate("/login");
+          console.log("회원가입 성공!");
+        })
+        .catch((err) => {
+          //  err 로직 설정
+          console.log(err);
+        });
+    } else {
+      onClick();
+    }
+  };
 
   return (
     <div className="step2">
@@ -91,7 +137,6 @@ const SignUp2: React.FC<SignUp2Props> = ({
             maxLength={11}
             onChange={handleInputChange}
             placeholder="휴대폰 번호를 입력해주세요."
-            disabled={verify}
             className="step2number"
           />
           <button onClick={verifyClick} className="verifybtn">
@@ -125,11 +170,11 @@ const SignUp2: React.FC<SignUp2Props> = ({
           <></>
         )}
         <button
-          onClick={onClick}
+          onClick={nextStepHandler}
           className="nextbtn"
           style={{ margin: "30px 25px 0 25px" }}
         >
-          다음
+          {kakaoCheck ? "정보 입력하기" : "다음"}
         </button>
       </div>
       <div className="to_login">
