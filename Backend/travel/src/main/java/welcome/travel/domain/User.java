@@ -83,5 +83,11 @@ public class User implements UserDetails {
         this.password = passwordEncoder.encode(password);
     }
 
+    public void updateKakao(String phoneNumber, Boolean agree_info, Boolean agree_marketing) {
+        this.phoneNumber = phoneNumber;
+        this.agree_info = agree_info;
+        this.agree_marketing = agree_marketing;
+    }
+
 
 }

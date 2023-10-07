@@ -93,6 +93,12 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
+    public String getEmailFromAccessToken(String accessToken) {
+        Claims claims = parseClaims(accessToken);
+
+        return claims.get("sub", String.class);
+    }
+
     // 토큰 정보를 검증하는 메서드
     public boolean validateToken(String token) {
         try {
