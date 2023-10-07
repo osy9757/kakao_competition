@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/login/oauth2/callback/kakao",
                         "/swagger-ui/**", "/v3/api-docs/**",
-                        "/users/signup",  "/users/login").permitAll()
+                        "/users/signup",  "/users/login","/sms/send").permitAll()
                 .anyRequest().authenticated();
 
         return http.build();
