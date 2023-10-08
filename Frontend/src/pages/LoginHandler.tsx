@@ -9,13 +9,12 @@ import { useEffect } from "react";
 const LoginHandler = () => {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
-  console.log(code);
 
   const dispatch = useDispatch();
 
-  const kakaoLogin = async () => {
+  const kakaoLogin = () => {
     const param = { code: code };
-    await axios({
+    axios({
       method: "GET",
       url: `${process.env.REACT_APP_RE_URL}`,
       params: param,
@@ -30,9 +29,7 @@ const LoginHandler = () => {
         // flag확인하하고 route설정하고  카카오 로그인 true로 변경
         // flag: true 회원가입페이지로 이동
         if (res.data.flag) {
-          console.log("dispatch 전");
           dispatch(kakaoSlice.actions.kakaologin(true));
-          console.log("dispatch 휴");
           navigate("/signup", { replace: true });
         } else {
           // db에 데이터가 저장돼있는 경우
@@ -45,8 +42,9 @@ const LoginHandler = () => {
   };
 
   useEffect(() => {
+    console.log("effect 실행");
     kakaoLogin();
-  }, []);
+  }, [code]);
 
   return (
     <div className="loginhandler">
