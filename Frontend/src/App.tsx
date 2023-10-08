@@ -9,7 +9,7 @@ import Header from "./components/common/Header";
 
 import Home from "./pages/Home";
 
-import FromeImgae from "./pages/FromImgae";
+import FromeImgae from "./pages/FromImage";
 import FromText from "./pages/FromText";
 import Place from "./pages/Place";
 
