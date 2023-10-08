@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../../../lib/types/login";
 import KakaoLogin from "./Kakao";
+import LoginHandler from "../../../pages/LoginHandler";
+import axios from "axios";
 
 type login = Login;
 
@@ -59,6 +61,25 @@ const LoginForm: React.FC = () => {
     navigate("/findpwd");
   };
 
+  const noramlLoginHandler = () => {
+    axios({
+      method: "POST",
+      url: `http://43.202.138.58:8080/users/login`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: loginForm,
+    })
+      .then((res) => {
+        window.alert("로그인 성공!");
+        localStorage.setItem("toekn", res.data.accessToken);
+        navigate("/main", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="loginform">
       <div
@@ -105,7 +126,11 @@ const LoginForm: React.FC = () => {
       <p className="findpwd" onClick={pwdHandler}>
         비밀번호를 잃어버리셨나요?
       </p>
-      <button type="submit" className="loginButton">
+      <button
+        type="submit"
+        className="loginButton"
+        onClick={noramlLoginHandler}
+      >
         LOGIN
       </button>
       <KakaoLogin />
