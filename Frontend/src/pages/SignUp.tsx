@@ -7,6 +7,7 @@ import "../styles/pages/SignUp.css";
 import { useSelector } from "react-redux";
 
 const SignUp = () => {
+  console.log("check")
   // 화면전환 step  / 약관동의 -> 번호인증 -> 회원가입 Form
   const [step, setStep] = useState<number>(1);
 
