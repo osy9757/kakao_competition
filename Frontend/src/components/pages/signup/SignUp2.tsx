@@ -42,11 +42,11 @@ const SignUp2: React.FC<SignUp2Props> = ({
           headers: {
             "Content-Tye": "application/json",
           },
-          data: { phoneNumber: phoneNumber },
+          data: { to: phoneNumber },
         }).then((res) => {
           console.log(verifyCode);
           setVerify(true);
-          setVerifyCode(res.data.verifyCode);
+          setVerifyCode(res.data.confirmNumber);
         });
       }
     } else {
