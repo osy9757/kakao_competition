@@ -11,7 +11,7 @@ public class SwaggerConfig {
     private static final String API_VERSION = "1.0.0";
     private static final String API_TITLE = "Welcome2Korea";
     private static final String API_DESCRIPTION = "어서와 한국은 처음이지 API 명세서입니다.";
-    private static final String API_GROUP_NAME = "v1-api";
+    private static final String API_GROUP_NAME = "Welcome2Korea-API-V1";
     private static final String API_PATHS = "/**";
 
     @Bean

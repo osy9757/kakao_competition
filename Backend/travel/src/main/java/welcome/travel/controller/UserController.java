@@ -51,7 +51,7 @@ public class UserController {
     /**
      * 회원가입
      */
-    @Operation(summary = "sign up user", description = "회원 가입하기")
+    @Operation(summary = "회원 가입", description = "자체 회원 가입")
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity singUp(@Valid @RequestBody UserSignUpRequestDto userSignUpRequestDto, BindingResult bindingResult) {
@@ -89,7 +89,7 @@ public class UserController {
     /**
      * 로그인
      */
-    @Operation(summary = "login user", description = "회원 로그인하기")
+    @Operation(summary = "로그인", description = "자체 회원 로그인")
     @PostMapping("/login")
     public TokenInfo login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         TokenInfo tokenInfo = userService.login(userLoginRequestDto.getEmail(), userLoginRequestDto.getPassword());
