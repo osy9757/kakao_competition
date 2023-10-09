@@ -5,6 +5,10 @@
   justify-content: center;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 /* SignUp1.tsx */
 
 .step1 {
@@ -81,8 +85,9 @@ input[type="checkbox"] {
 
 .step2phone {
   flex: 1;
-  margin: 0 15px 0 15px;
   justify-content: center;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .step2number {
