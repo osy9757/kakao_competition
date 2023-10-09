@@ -37,16 +37,16 @@ const SignUp2: React.FC<SignUp2Props> = ({
       if (!phoneNumberRegex.test(phoneNumber)) {
         window.alert("전화번호를 확인해 주세요!");
       } else {
-        axios(" http://localhost:8080/app/send", {
+        axios(`http://${process.env.REACT_APP_BE_API}/sms/send`, {
           method: "post",
           headers: {
             "Content-Tye": "application/json",
           },
-          data: { phoneNumber: phoneNumber },
+          data: { to: phoneNumber },
         }).then((res) => {
           console.log(verifyCode);
           setVerify(true);
-          setVerifyCode(res.data.verifyCode);
+          setVerifyCode(res.data.confirmNumber);
         });
       }
     } else {
@@ -84,13 +84,11 @@ const SignUp2: React.FC<SignUp2Props> = ({
         return;
       }
 
-      const parsedToken = JSON.parse(token);
-
       axios({
         method: "post",
-        url: `http://${process.env.REACT_APP_BE_API}/`,
+        url: `http://${process.env.REACT_APP_BE_API}/login/aouth2/kakao`,
         headers: {
-          Authorization: `Bearer ${parsedToken.accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
         data: {
           agree_info: checkboxes.checkbox3,
