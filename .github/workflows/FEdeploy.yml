@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-			with:
-				ref: "FE"
+      with:
+        ref: "FE"
     - run: cd Frontend/
     - run: npm ci
     - run: npm run build
@@ -25,3 +25,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'ap-northeast-2'
         SOURCE_DIR: 'build'
+
