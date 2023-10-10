@@ -4,10 +4,10 @@ export const loginSlice = createSlice({
   name: "loginState",
   initialState: { value: false },
   reducers: {
-    login: (state, action) => {
+    login: (state) => {
       state.value = true;
     },
-    logout: (state, action) => {
+    logout: (state) => {
       state.value = false;
     },
   },
