@@ -49,6 +49,10 @@ src/
 
 댓글을 통한 사용자간 여행지 정보 공유 가능
 
+![image](https://github.com/Yjason-K/kakao_competition/assets/81736873/800a61af-08d8-485b-82e7-7df95b3012ca)
+
+OAuth2.0 카카오 소셜 간편 회원 가입 기능 구현
+
 
 ## Commit convetnion
 
