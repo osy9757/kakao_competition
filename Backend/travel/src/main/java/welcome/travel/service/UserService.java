@@ -1,6 +1,7 @@
 package welcome.travel.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import welcome.travel.domain.User;
+import welcome.travel.dto.UserInfoResponseDto;
 import welcome.travel.exception.ClientException;
 import welcome.travel.exception.ErrorCode;
 import welcome.travel.jwt.JwtTokenProvider;
@@ -28,12 +30,19 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-//    @Value("${spring.mail.username}")
-//    String userEmail;
-
-    public User findUser(String email) {
-        return userRepository.findByEmail(email).get();
+    public UserInfoResponseDto getUserInfo(String token) {
+        String accessToken = token.substring("Bearer ".length());
+        User user = userRepository.findByEmail(jwtTokenProvider.getEmailFromAccessToken(accessToken)).orElseThrow();
+        return UserInfoResponseDto.builder()
+                .nickname(user.getNickname())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .build();
     }
+
+//    public User findUser(String email) {
+//        return userRepository.findByEmail(email).get();
+//    }
 
 //    @Transactional
 //    public MailDto createMailAndChangePassword(String memberEmail) {
