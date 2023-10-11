@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import welcome.travel.domain.User;
+import welcome.travel.dto.UserInfoResponseDto;
 import welcome.travel.dto.UserLoginRequestDto;
 import welcome.travel.dto.UserSignUpRequestDto;
 import welcome.travel.jwt.TokenInfo;
@@ -31,22 +32,14 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
 
-//    /**
-//     * 회원 정보 조회
-//     */
-//    @Operation(summary = "user informations", description = "회원 정보 조회하기")
-//    @GetMapping("/user")
-//    public ResponseEntity<UserInfoByTokenDto> getUserByEmail() {
-//        User user = userService.findUser(SecurityUtil.getLoginUsername());
-//        UserInfoByTokenDto userInfoByTokenDto = UserInfoByTokenDto.builder()
-//                .name(user.getName())
-//                .nickname(user.getNickname())
-//                .serialNumber(user.getSerialNumber())
-//                .email(user.getEmail())
-//                .phoneNumber(user.getPhoneNumber())
-//                .build();
-//        return ResponseEntity.ok(userInfoByTokenDto);
-//    }
+    /**
+     * 회원 정보 조회
+     */
+    @Operation(summary = "이메일 조회", description = "엑세스 토큰으로 이메일 조회")
+    @GetMapping
+    public ResponseEntity<UserInfoResponseDto> getUserByEmail(@RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(userService.getUserInfo(token));
+    }
 
     /**
      * 회원가입
