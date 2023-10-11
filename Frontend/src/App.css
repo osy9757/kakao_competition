@@ -8,6 +8,7 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
+  overflow: auto;
 }
 
 .App {
@@ -19,6 +20,7 @@ html {
 .content {
   flex: 1; /* 남아있는 공간을 차지하도록 설정 */
   font-family: 'Nanum Gothic', sans-serif;
+  overflow: auto;
 }
 
 html {
