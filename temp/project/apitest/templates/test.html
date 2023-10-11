@@ -1,0 +1,66 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Similar Images</title>
+</head>
+<body>
+    <h1>Upload an Image</h1>
+    <form method="post" action="{% url 'image_similarity_view' %}" enctype="multipart/form-data">
+        <div class="button">
+            <label for="chooseFile">
+                CLICK 
+            </label>
+        </div>
+        <input type="file" id="chooseFile" name="image" accept="image/*" onchange="loadFile(this)">
+        <input type="submit" value="Find Similar Images">
+        {% csrf_token %}
+        
+    </form>
+    <img id="preview" src="" alt="Image Preview" style="width: 224px; height: 224px;">
+    <script>
+        function loadFile(input) {
+            const preview = document.getElementById('preview');
+            const file = input.files[0];
+            const reader = new FileReader();
+            
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+            
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+            }
+        }
+    </script>
+{% if image_paths %}
+<h2>Similar Images</h2>
+{% for image_path in image_paths %}
+    <img src="{{ image_path }}" alt="Similar image" style="width:224px;height:224px;">
+{% endfor %}
+{% endif %}
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Similarity Results</title>
+</head>
+<body>
+    <h1>Selected Image</h1>
+    <img src="{{ specific_image_path }}" alt="Selected Image" style="width: 200px;">
+    
+    <h1>Top Similar Images</h1>
+    {% for image_path in image_paths %}
+        <div style="margin-bottom: 20px;">
+            <img src="{{ image_path }}" alt="Similar Image" style="width: 200px;">
+        </div>
+    {% endfor %}
+</body>
+</html>
