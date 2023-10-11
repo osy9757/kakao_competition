@@ -40,7 +40,7 @@ const Header: React.FC = () => {
           <li className='dropdown'>
             <a href="#">Login</a>
             <div className='dropdown-options'>
-              <a href="/lgin">로그인</a>
+              <a href="/login">로그인</a>
               <a href="/signup">회원가입</a>
               <a href="/findpwd">아이디<br></br>비밀번호찾기</a>
             </div>
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
           <li className='dropdown'>
             <a href="#">Signin</a>
             <div className='dropdown-options'>
-              <a href="/lgin">로그인</a>
+              <a href="/login">로그인</a>
               <a href="/signup">회원가입</a>
               <a href="/findpwd">아이디<br></br>비밀번호찾기</a>
             </div>

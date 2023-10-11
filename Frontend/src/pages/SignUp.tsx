@@ -4,8 +4,10 @@ import SignUp2 from "../components/pages/signup/SignUp2";
 import SignUp3 from "../components/pages/signup/SignUp3";
 
 import "../styles/pages/SignUp.css";
+import { useSelector } from "react-redux";
 
 const SignUp = () => {
+  console.log("check")
   // 화면전환 step  / 약관동의 -> 번호인증 -> 회원가입 Form
   const [step, setStep] = useState<number>(1);
 
@@ -44,6 +46,7 @@ const SignUp = () => {
             onClick={nextStep}
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
+            checkboxes={checkboxes}
           />
         </div>
       );

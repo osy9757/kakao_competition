@@ -32,10 +32,7 @@ const Footer = () => {
             <p>서울시 주소 샬라샬라</p>
           </div>
         </div>
-        <div
-          className="footerdown"
-          style={{ height: "60px", alignItems: "center" }}
-        >
+        <div className="footerdown">
           <p>Copyright ©2023. All Rights Reserved. — Designed by J and D</p>
         </div>
       </footer>
