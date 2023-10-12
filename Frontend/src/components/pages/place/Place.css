@@ -82,6 +82,21 @@
   width: 70vw;
 }
 
+.keyword_btn_wrapper {
+  margin: 10px 0 10px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.categorybutton {
+  background-color: #718fd5;
+  color: white;
+  font-size: 13px;
+  border: none;
+  border-radius: 5px;
+  padding: 3px 5px 3px 5px;
+}
+
 /* Comments.tsx */
 .commtents_wrapper {
   margin-top: 4rem;
@@ -151,7 +166,8 @@
 }
 
 .userthumnail {
-  width: 6%;
+  width: 10%;
+  margin-right: 5px;
 }
 
 .thumnail {
@@ -194,4 +210,28 @@
 
 .comment {
   font-size: 1.8rem;
+}
+
+@media (max-width: 576px) {
+  .placeinfo,
+  .placemap,
+  .commtents_wrapper {
+    width: 90vw;
+  }
+
+  .keyword_btn_wrapper {
+    margin: 10px 0 10px 0;
+  }
+
+  .userthumnail {
+    width: 20%;
+  }
+
+  .comment_input {
+    height: auto;
+  }
+
+  .inputbox {
+    height: 15rem;
+  }
 }
