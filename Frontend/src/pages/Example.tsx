@@ -1,27 +1,45 @@
+import React, { useState } from "react";
 import axios from "axios";
-import HamburgerButton from "../components/common/HamburgerButton";
-import { MULTIPLEMARKER } from "../components/pages/place/MultipleMarker";
-import useFetch from "../hooks/useFetch";
 
-const Example = () => {
-  const clickHandle = () => {
-    axios(" http://192.168.45.178:8080/app/send", {
-      method: "post",
-      headers: {
-        "Content-Tye": "application/json",
-      },
-      data: { phoneNumber: "01094276462" },
-    }).then((res) => {
-      console.log(res);
-    });
+const Example: React.FC = () => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
+    }
   };
+
+  const onUpload = async () => {
+    if (!selectedFile) {
+      console.error("No file selected");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("files", selectedFile);
+
+    try {
+      const response = await axios.post(
+        "http://43.202.138.58:8000/kyh/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("File uploaded successfully", response.data);
+    } catch (error) {
+      console.error("Error uploading the file", error);
+    }
+  };
+
   return (
     <div>
-      {/* 반응형 nav에 사용할 버튼입니다. */}
-      <HamburgerButton />
-      <button onClick={clickHandle}>문자</button>
-
-      <MULTIPLEMARKER />
+      <input type="file" onChange={onFileChange} />
+      <button onClick={onUpload}>Upload</button>
     </div>
   );
 };
