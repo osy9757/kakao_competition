@@ -17,7 +17,6 @@ button:hover {
   justify-content: center;
   width: 300px;
   height: 500px;
-  border: 1px solid black;
   background-color: white;
 }
 
@@ -74,7 +73,6 @@ input[type="checkbox"] {
   justify-content: center;
   width: 300px;
   height: 500px;
-  border: 1px solid black;
   background-color: white;
 }
 
@@ -139,7 +137,6 @@ input[type="checkbox"] {
   align-items: center;
   width: 300px;
   height: 500px;
-  border: 1px solid black;
   background-color: white;
 }
 
@@ -166,7 +163,7 @@ input[type="checkbox"] {
   width: 250px;
 }
 
-input[id="email"] {
+.signupemail {
   width: 215px;
   height: 30px;
   background-image: url("../../../public/assets/email_icon.png");
@@ -179,7 +176,7 @@ input[id="email"] {
   font-size: 10px;
 }
 
-input[id="password"] {
+.signuppassword {
   width: 215px;
   height: 30px;
   background-image: url("../../../public/assets/verify_icon.png");

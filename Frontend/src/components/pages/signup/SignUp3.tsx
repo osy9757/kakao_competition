@@ -115,6 +115,7 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
           <input
             type="text"
             id="email"
+            className="signupemail"
             placeholder="이메일 주소를 입력해 주세요."
             value={signUpForm.email}
             onChange={handleInputChange}
@@ -130,6 +131,7 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
           <input
             type="password"
             id="password"
+            className="signuppassword"
             placeholder="영문, 숫자, 특수문자 조합으로 이루어진 8~15자"
             value={signUpForm.password}
             onChange={handleInputChange}
@@ -146,6 +148,7 @@ const SignUp3: React.FC<SignUp3Props> = ({ phoneNumber, checkboxes }) => {
             type="password"
             id="password"
             placeholder="비밀번호를 입력해 주세요."
+            className="signuppassword"
             value={pwdpwd}
             onChange={pwdpwdChange}
           />

@@ -64,7 +64,7 @@ const LoginForm: React.FC = () => {
   const noramlLoginHandler = () => {
     axios({
       method: "POST",
-      url: `http://43.202.138.58:8080/users/login`,
+      url: `${process.env.REACT_APP_BE_API}users/login`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -93,7 +93,7 @@ const LoginForm: React.FC = () => {
         <input
           type="email"
           id="email"
-          className="email"
+          className="loginemail"
           value={loginForm.email}
           onChange={handleInputChange}
           placeholder="이메일을 입력해주세요."
@@ -113,7 +113,7 @@ const LoginForm: React.FC = () => {
         <input
           type="password"
           id="password"
-          className="password"
+          className="loginpassword"
           value={loginForm.password}
           onChange={handleInputChange}
           required
