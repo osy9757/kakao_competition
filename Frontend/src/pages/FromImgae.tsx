@@ -1,73 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import ImageDisplay from '../components/pages/service/ImageDisplay';
-import SelectedImage from '../components/pages/service/SelectedImages';
-import ResultImages from '../components/pages/service/ResultImages';
-import styled from 'styled-components';
-
-const PageContainer = styled('div')`
-    display: grid;
-    grid-template-rows: auto auto auto;
-    padding: 20px;
-    width: 100vw;
-    height: 100vh;
-`;
 
 
-const API_ENDPOINT = "ENDPOINT"; // 임시로 설정한 백엔드 API 엔드포인트
 
-interface ImageResult {
-  imageUrl: string;
-  heatmapUrl: string;
-  description: string;
-}
+import React, { useState } from 'react';
+import HeaderImage from '../components/pages/service/HeaderImage';
+import ImageSelector from '../components/pages/service/ImageSelector';
+import ResultImage from '../components/pages/service/ResultImage';
 
-const MainPage: React.FC = () => {
-    const [currentImageIndex, setCurrentImageIndex] = useState<number>(1);
+
+const FromImage: React.FC = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
-    const [imageDescription, setImageDescription] = useState<string>("");
-    const [resultImages, setResultImages] = useState<ImageResult[]>([]);
+    const [resultImageUrl, setResultImageUrl] = useState<string | null>(null);
+    const [hoverImageUrl, setHoverImageUrl] = useState<string | null>(null); 
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentImageIndex(prevIndex => (prevIndex < 5 ? prevIndex + 1 : 1));
-        }, 5000);
-        return () => clearInterval(interval); // 컴포넌트 언마운트 시, 인터벌을 정리
-    }, []);
-    
-    const handleLike = async () => {
-        // 이미지를 백엔드 API로 전송하고 결과를 받아옵니다.
-        // 아래는 예시 코드입니다. 실제 API 호출을 위해 axios 등의 라이브러리가 필요합니다.
-        /*
-        const response = await axios.post(API_ENDPOINT, { image: selectedImage });
-        if (response.data) {
-            setSelectedImage(response.data.received);
-            setResultImages(response.data.results);
-            // 이미지 설명도 설정합니다.
-        }
-        */
+    const handleLike = () => {
+        setSelectedImage("/path/to/liked/image.jpg"); // 예시 경로, 실제 이미지 경로로 변경
     };
 
     const handleCamera = () => {
-        // 카메라 혹은 파일 첨부 기능 구현
-        // 예: <input type="file" accept=".jpg, .png" onChange={...} />
+        // 파일 선택 및 업로드 로직을 추가
     };
 
     const handleSkip = () => {
-        setCurrentImageIndex(prevIndex => (prevIndex < 5 ? prevIndex + 1 : 1));
+        setSelectedImage(null);
+        // 다음 이미지로 넘어가는 로직을 추가
+    }; 
+    const handleUploadComplete = (uploadedImageUrl: string) => {
+        setResultImageUrl(uploadedImageUrl);
+        setHoverImageUrl("/path/to/hover/image.jpg"); // 예시 경로, 실제 이미지 경로로 변경
     };
 
     return (
-        <PageContainer>
-            <ImageDisplay 
-                imageUrl={`/img${currentImageIndex}.jpg`} 
-                onLike={handleLike} 
-                onCamera={handleCamera} 
-                onSkip={handleSkip} 
-            />
-            {selectedImage && <SelectedImage imageUrl={selectedImage} description={imageDescription} />}
-            {resultImages.length > 0 && <ResultImages results={resultImages} />}
-        </PageContainer>
+        <div>
+            <HeaderImage onLike={handleLike} onCamera={handleCamera} onSkip={handleSkip} />
+            {selectedImage && <ImageSelector selectedImage={selectedImage} onUploadComplete={handleUploadComplete} />}
+            {resultImageUrl && hoverImageUrl && <ResultImage imageUrl={resultImageUrl} hoverImageUrl={hoverImageUrl} />}
+        </div>
     );
-}
+};
 
-export default MainPage;
+export default FromImage;

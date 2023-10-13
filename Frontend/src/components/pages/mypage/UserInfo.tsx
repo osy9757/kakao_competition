@@ -3,26 +3,71 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const UserInfoContainer = styled('div')`
-  padding: 16px;
-  border: 1px solid #ccc;
-  border: none;  
-  border-radius: 8px;  
+  padding: 20px;
+  border-radius: 8px;
   background-color: #FFFFFF;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+  font-family: Arial, sans-serif;
+`;
+
+const InfoRow = styled('div')`
+  margin-bottom: 15px;
+  font-size: 16px;
+`;
+
+const LabelRow = styled('div')`
+  font-weight: bold;
+  margin-bottom: 5px;
+`;
+
+const InputRow = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+`;
+
+const InputBox = styled('input')`
+  padding: 5px;
+  padding-right: 30px; 
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 60%;
+  position: relative;
+`;
+
+const EyeButton = styled('button')`
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+`;
+
+const EditButton = styled('button')`
+  padding: 8px 15px;
+  background-color: skyblue;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
 `;
 
 const UserInfo: React.FC = () => {
-  const [userInfo, setUserInfo] = React.useState({
+  const [userInfo, setUserInfo] = useState({
     nickname: 'John Doe',
     email: 'john.doe@example.com',
     phoneNumber: '010-1234-5678',
     password: '********'
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    // API 엔드포인트 (이 부분은 실제 백엔드 엔드포인트로 수정해야 함)
     const API_ENDPOINT = 'backend_url';
-
     axios.get(API_ENDPOINT)
       .then((response) => {
         const data = response.data;
@@ -30,7 +75,7 @@ const UserInfo: React.FC = () => {
           nickname: data.nickname,
           email: data.email,
           phoneNumber: data.phoneNumber,
-          password: '********' // 비밀번호는 보통 직접 노출되지 않으므로 마스킹 처리
+          password: '********' // Mock
         });
       })
       .catch((error) => {
@@ -38,14 +83,38 @@ const UserInfo: React.FC = () => {
       });
   }, []);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <UserInfoContainer>
-      <div>Nickname: {userInfo.nickname}</div>
-      <div>Email: {userInfo.email}</div>
-      <div>Phone Number: {userInfo.phoneNumber}</div>
-      <div>Password: {userInfo.password}</div>
-      <button>수정</button>
+      <InfoRow>
+        <LabelRow>Nickname:</LabelRow>
+        <InputRow>
+          <InputBox value={userInfo.nickname} readOnly />
+        </InputRow>
+      </InfoRow>
+      <InfoRow>
+        <LabelRow>Email:</LabelRow>
+        <InputRow>
+          <InputBox value={userInfo.email} readOnly />
+        </InputRow>
+      </InfoRow>
+      <InfoRow>
+        <LabelRow>Phone Number:</LabelRow>
+        <InputRow>
+          <InputBox value={userInfo.phoneNumber} readOnly />
+        </InputRow>
+      </InfoRow>
+      <InfoRow>
+        <LabelRow>Password:</LabelRow>
+        <InputBox type={showPassword ? 'text' : 'password'} value={'real_password'} readOnly />
+        <EyeButton onClick={togglePasswordVisibility}>
+          {showPassword ? '🙈' : '👁️'}
+        </EyeButton>
+      </InfoRow>
+      <EditButton>Edit</EditButton>
     </UserInfoContainer>
   );
 };

@@ -9,7 +9,7 @@ import Header from "./components/common/Header";
 
 import Home from "./pages/Home";
 
-import FromeImgae from "./pages/FromImgae";
+import FromeImage from "./pages/FromImage";
 import Place from "./pages/Place";
 
 import SignUp from "./pages/SignUp";
@@ -39,7 +39,7 @@ const App: React.FC = () => {
               {/* 홈/메인 */}
               <Route path="/main" element={<Home />} />
               {/* 여행지 찾기 */}
-              <Route path="/fromimage" element={<FromeImgae />} />
+              <Route path="/fromimage" element={<FromeImage />} />
               <Route path="/place/:id" element={<Place />} />
               <Route path="/postreview/:id" element={<PostReview />} />
               {/* 로그인 */}
