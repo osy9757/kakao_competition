@@ -27,6 +27,23 @@ const MainPage: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const API_URL = "http://43.202.138.58:8000/kyh/";
 
+    const transformAPIResponse = (apiResponse: any): ImageResult[] => {
+        const results: ImageResult[] = [];
+        for (let i = 1; i <= 3; i++) {
+            const item = apiResponse[i];
+            if (item) {
+                const description = JSON.parse(item.json_data).name;
+                results.push({
+                    imageUrl: item.image,
+                    heatmapUrl: item.heatmap,
+                    description: description
+                });
+            }
+        }
+        return results;
+    };
+
+
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIndex(prevIndex => (prevIndex < 5 ? prevIndex + 1 : 1));
@@ -35,28 +52,30 @@ const MainPage: React.FC = () => {
     }, []);
     
     const handleLike = async () => {
-        // 1. Like를 누른 이미지를 설정합니다.
-        setSelectedImage(`/img${currentImageIndex}.jpg`);
+        setSelectedImage(`/img${currentImageIndex}.jpg`);        
         
-        // 이미지를 FormData에 추가
         const formData = new FormData();
         formData.append('files', `/img${currentImageIndex}.jpg`);
-        
-        console.log(formData)
 
         try {
-            // API에 이미지를 전송
-            const response = await axios.post(API_URL, formData, {
+            const response = await fetch(`/img${currentImageIndex}.jpg`);
+            const imageBlob = await response.blob();
+    
+            const formData = new FormData();
+            formData.append('files', imageBlob, `img${currentImageIndex}.jpg`); 
+    
+            const apiResponse = await axios.post(API_URL, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
     
-            if (response.status === 200) {
-                // 응답에서 결과 이미지 목록을 가져와 상태를 업데이트
-                setResultImages(response.data);
+            if (apiResponse.status === 200) {
+                const transformedResults = transformAPIResponse(apiResponse.data);
+                setResultImages(transformedResults);
+                console.log(resultImages)
             } else {
-                console.error(`Error occurred: ${response.status} - ${response.data}`);
+                console.error(`Error occurred: ${apiResponse.status} - ${apiResponse.data}`);
             }
         } catch (error) {
             console.error(`Error occurred: ${error}`);
@@ -69,31 +88,32 @@ const MainPage: React.FC = () => {
         }
     };
 
-    const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             const fileURL = URL.createObjectURL(file);
             setSelectedImage(fileURL);
-        }
-
-        const mockResultImages: ImageResult[] = [
-            {
-                imageUrl: "/img1.jpg",
-                heatmapUrl: "/img4.jpg",
-                description: "Image 1 Description"
-            },
-            {
-                imageUrl: "/img2.jpg",
-                heatmapUrl: "/img5.jpg",
-                description: "Image 2 Description"
-            },
-            {
-                imageUrl: "/img3.jpg",
-                heatmapUrl: "/img6.jpg",
-                description: "Image 3 Description"
+            
+            const formData = new FormData();
+            formData.append('files', file);
+    
+            try {
+                const apiResponse = await axios.post(API_URL, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+    
+                if (apiResponse.status === 200) {
+                    const transformedResults = transformAPIResponse(apiResponse.data);
+                    setResultImages(transformedResults);
+                } else {
+                    console.error(`Error occurred: ${apiResponse.status} - ${apiResponse.data}`);
+                }
+            } catch (error) {
+                console.error(`Error occurred: ${error}`);
             }
-        ];
-        setResultImages(mockResultImages);
+        }
     };
 
     const handleSkip = () => {
