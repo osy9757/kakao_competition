@@ -1,15 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const FindPlace = () => {
-  // 검색 input text
-  const [searchText, setSearchText] = useState<string>("");
-  // 검색 input handeler
-  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setSearchText(e.target.value);
-  };
-
   // 여행 이미지
   const [tourImg, setTourImg] = useState("/img1.jpg");
+
+  const imageList = [
+    "/img1.jpg",
+    "/img2.jpg",
+    "/img3.jpg",
+    "/img4.jpg",
+    "/img5.jpg",
+    "/img6.jpg",
+  ];
+  let imgIndex = 0;
+
+  const imgRef = useRef<HTMLImageElement | null>(null);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (imgRef.current) {
+        imgRef.current.style.opacity = "0";
+      }
+
+      imgIndex = (imgIndex + 1) % imageList.length;
+
+      setTimeout(() => {
+        setTourImg(imageList[imgIndex]);
+        if (imgRef.current) {
+          imgRef.current.style.opacity = "1";
+        }
+      }, 500); // 여기서 500ms는 CSS의 transition 시간과 동일해야 합니다.
+    }, 5500); // 5초 + 0.5초(애니메이션 시간)마다 이미지 변경
+
+    return () => clearInterval(intervalId); // 컴포넌트 언마운트될 때 interval 제거
+  }, []);
 
   return (
     <div className="findplace">
@@ -26,7 +50,7 @@ const FindPlace = () => {
           </div>
         </div>
         <div className="right">
-          <img src={tourImg} className="tourimg"></img>
+          <img src={tourImg} className="tourimg" ref={imgRef}></img>
         </div>
       </div>
     </div>

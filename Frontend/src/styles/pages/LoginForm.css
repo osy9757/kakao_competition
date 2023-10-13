@@ -1,12 +1,11 @@
 .loginform {
   display: flex;
   flex-direction: column;
-  border: 0.5px solid gray;
+  border-radius: 10px;
   border-radius: 3;
   justify-content: center;
   align-items: center;
   width: 340px;
-  height: 300px;
   align-items: center;
   margin-bottom: 10px;
 }
@@ -60,6 +59,8 @@
 }
 
 .findpwd {
+  margin-top: 10px;
+  margin-bottom: 10px;
   align-self: end;
   margin-right: 10px;
   color: #666666;
@@ -81,4 +82,30 @@
   .password {
     width: 200px;
   }
+}
+
+.loginemail {
+  width: 255px;
+  height: 30px;
+  background-image: url("../../../public/assets/email_icon.png");
+  background-size: 16px 16px; /* 이미지 크기 설정 */
+  background-repeat: no-repeat;
+  background-position: 4px center; /* 아이콘 위치 조정 */
+  padding-left: 28px; /* Input 텍스트와 아이콘 사이 간격 조정 */
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 10px;
+}
+
+.loginpassword {
+  width: 255px;
+  height: 30px;
+  background-image: url("../../../public/assets/verify_icon.png");
+  background-size: 16px 16px; /* 이미지 크기 설정 */
+  background-repeat: no-repeat;
+  background-position: 4px center; /* 아이콘 위치 조정 */
+  padding-left: 28px; /* Input 텍스트와 아이콘 사이 간격 조정 */
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 10px;
 }

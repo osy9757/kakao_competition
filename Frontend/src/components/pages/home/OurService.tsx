@@ -13,7 +13,10 @@ const OurService = () => {
     <div className="oursevice">
       <div className="servicetext">
         <h2 className="h2_service">Our Service</h2>
-        <hr style={{ border: "1.2px solid black", width: "20px" }}></hr>
+        <hr
+          className="hr_bar"
+          style={{ border: "1.2px solid black", width: "20px" }}
+        ></hr>
         <p>
           저희는 어쩌고 저쩌고 서비스를 제공합니다. <br />
           마음에 드는 여행지의 사진을 좋아요 어쩌고 저쩌고 <br />

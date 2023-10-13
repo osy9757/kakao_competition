@@ -15,6 +15,21 @@ type MarkerType = {
   content: string;
 };
 
+type category = "CE7" | "FD6" | "AT4" | "PK6" | "SW8" | "AD5" | "";
+
+type CategoryItem = {
+  name: string;
+  code: category;
+};
+const categoryData: CategoryItem[] = [
+  { name: "카페", code: "CE7" },
+  { name: "음식점", code: "FD6" },
+  { name: "관광명소", code: "AT4" },
+  { name: "주차장", code: "PK6" },
+  { name: "지하철역", code: "SW8" },
+  { name: "숙박", code: "AD5" },
+];
+
 export const PLACEMAP = () => {
   const [info, setInfo] = useState<MarkerType | null>(null);
   const [markers, setMarkers] = useState<MarkerType[]>([]);
@@ -22,12 +37,26 @@ export const PLACEMAP = () => {
 
   const [showMarkers, setShowMarkers] = useState(false);
 
+  // PK6 주차장, SW8 지하철역, AT4 관광명소, AD5 숙박, FD6 음식점, CE7 카페
+  const [category, setCategory] = useState<category>("");
+
+  const handleCategoryClick = (code: category) => {
+    // 이미 선택된 카테고리가 다시 선택되면
+    if (category === code) {
+      setCategory(""); // 카테고리 상태를 초기화합니다.
+      setShowMarkers(false); // 마커를 숨깁니다.
+    } else {
+      setCategory(code);
+      setShowMarkers(true); // 버튼 클릭 시 마커를 표시합니다.
+    }
+  };
+
   useEffect(() => {
     if (!map) return;
     const ps = new kakao.maps.services.Places(map);
 
     ps.categorySearch(
-      "CE7",
+      category,
       (data, status, _pagination) => {
         if (status === kakao.maps.services.Status.OK) {
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -59,14 +88,22 @@ export const PLACEMAP = () => {
       },
       { x: 35.15319327, y: 129.11897609, useMapBounds: true }
     );
-  }, [map]);
+  }, [map, category]);
 
   console.log(markers);
 
   return (
     <div className="placemap">
       <div className="keyword_btn_wrapper">
-        <button onClick={() => setShowMarkers((prev) => !prev)}>카페</button>
+        {categoryData.map((cat) => (
+          <button
+            key={cat.code}
+            className="categorybutton"
+            onClick={() => handleCategoryClick(cat.code)}
+          >
+            {cat.name}
+          </button>
+        ))}
       </div>
       <Map
         center={{ lat: 35.15319327, lng: 129.11897609 }}
@@ -79,21 +116,17 @@ export const PLACEMAP = () => {
           <div style={{ color: "#000" }}>광안리 해수욕장</div>
         </MapMarker>
         {showMarkers &&
-          markers.map(
-            (
-              marker // showMarkers가 true일 때만 마커를 보여줍니다
-            ) => (
-              <MapMarker
-                key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-                position={marker.position}
-                onClick={() => setInfo(marker)}
-              >
-                {info && info.content === marker.content && (
-                  <div style={{ color: "#000" }}>{marker.content}</div>
-                )}
-              </MapMarker>
-            )
-          )}
+          markers.map((marker) => (
+            <MapMarker
+              key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+              position={marker.position}
+              onClick={() => setInfo(marker)}
+            >
+              {info && info.content === marker.content && (
+                <div style={{ color: "#000" }}>{marker.content}</div>
+              )}
+            </MapMarker>
+          ))}
       </Map>
     </div>
   );

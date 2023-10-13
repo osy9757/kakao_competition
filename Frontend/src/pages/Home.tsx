@@ -6,8 +6,6 @@ import OurService from "../components/pages/home/OurService";
 import PopularDestination from "../components/pages/home/PopularDestination";
 import Subscribe from "../components/pages/home/Subscribe";
 
-// import BackgroundChanger from '../components/common/BackgroundChanger';
-
 const Home: React.FC = () => {
   const images = [
     "/img1.jpg",
@@ -18,7 +16,6 @@ const Home: React.FC = () => {
   ];
 
   return (
-    // <BackgroundChanger imageList={images} />;
     <div style={{ backgroundColor: "white" }}>
       <FindPlace />
       <OurService />
