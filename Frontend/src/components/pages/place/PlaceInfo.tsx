@@ -1,15 +1,23 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../lib/types/redux";
 
 export const PLACEINRFO = () => {
+  const isLogin = useSelector((state: RootState) => state.login.value);
+
+  //  로그인 한 유저라면 여행지 좋아요 받아와야 함
   const [isLike, setIsLike] = useState(false);
 
   const toggleButtonClick = () => {
-    setIsLike((prevChecked) => !prevChecked);
+    if (isLogin) {
+      setIsLike((prevChecked) => !prevChecked);
+    } else {
+      window.alert("로그인 후 사용 가능합니다!");
+    }
   };
 
   return (
     <div className="placeinfo">
-      <p>여행 정보 컴포너넌트 (텍스트 및 사진 받아올 예정)</p>
       <div className="placename">
         <h1>여행지 이름</h1>
         {/* 좋아요 버튼 handler 추가해야함 백엔드 연동 */}

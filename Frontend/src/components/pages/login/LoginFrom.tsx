@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../../../lib/types/login";
 import KakaoLogin from "./Kakao";
+import LoginHandler from "../../../pages/LoginHandler";
+import axios from "axios";
 
 type login = Login;
 
@@ -59,6 +61,25 @@ const LoginForm: React.FC = () => {
     navigate("/findpwd");
   };
 
+  const noramlLoginHandler = () => {
+    axios({
+      method: "POST",
+      url: `${process.env.REACT_APP_BE_API}users/login`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: loginForm,
+    })
+      .then((res) => {
+        window.alert("로그인 성공!");
+        localStorage.setItem("toekn", res.data.accessToken);
+        navigate("/main", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="loginform">
       <div
@@ -72,7 +93,7 @@ const LoginForm: React.FC = () => {
         <input
           type="email"
           id="email"
-          className="email"
+          className="loginemail"
           value={loginForm.email}
           onChange={handleInputChange}
           placeholder="이메일을 입력해주세요."
@@ -92,7 +113,7 @@ const LoginForm: React.FC = () => {
         <input
           type="password"
           id="password"
-          className="password"
+          className="loginpassword"
           value={loginForm.password}
           onChange={handleInputChange}
           required
@@ -105,7 +126,11 @@ const LoginForm: React.FC = () => {
       <p className="findpwd" onClick={pwdHandler}>
         비밀번호를 잃어버리셨나요?
       </p>
-      <button type="submit" className="loginButton">
+      <button
+        type="submit"
+        className="loginButton"
+        onClick={noramlLoginHandler}
+      >
         LOGIN
       </button>
       <KakaoLogin />
