@@ -38,45 +38,29 @@ const MainPage: React.FC = () => {
         // 1. Like를 누른 이미지를 설정합니다.
         setSelectedImage(`/img${currentImageIndex}.jpg`);
         
-        const mockResultImages: ImageResult[] = [
-            {
-                imageUrl: "/img1.jpg",
-                heatmapUrl: "/img4.jpg",
-                description: "Image 1 Description"
-            },
-            {
-                imageUrl: "/img2.jpg",
-                heatmapUrl: "/img5.jpg",
-                description: "Image 2 Description"
-            },
-            {
-                imageUrl: "/img3.jpg",
-                heatmapUrl: "/img6.jpg",
-                description: "Image 3 Description"
-            }
-        ];
-        setResultImages(mockResultImages);
+        // 이미지를 FormData에 추가
+        const formData = new FormData();
+        formData.append('files', `/img${currentImageIndex}.jpg`);
         
+        console.log(formData)
+
+        try {
+            // API에 이미지를 전송
+            const response = await axios.post(API_URL, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
     
-        // try {
-        //     const formData = new FormData();
-        //     formData.append('image', `/img${currentImageIndex}.jpg`); // 현재 이미지의 경로
-    
-        //     const response = await axios.post(API_URL, formData, {
-        //         headers: {
-        //             'Content-Type': 'multipart/form-data',
-        //         },
-        //     });
-    
-        //     const data = response.data;
-        //     const imagesData = Object.entries(data)
-        //         .filter(([key, _]) => key !== 'received')
-        //         .map(([, value]) => value as ImageResult);
-            
-        //     setResultImages(imagesData); 
-        // } catch (error) {
-        //     console.error("Error uploading image:", error);
-        // }
+            if (response.status === 200) {
+                // 응답에서 결과 이미지 목록을 가져와 상태를 업데이트
+                setResultImages(response.data);
+            } else {
+                console.error(`Error occurred: ${response.status} - ${response.data}`);
+            }
+        } catch (error) {
+            console.error(`Error occurred: ${error}`);
+        }
     };
 
     const handleCamera = () => {
