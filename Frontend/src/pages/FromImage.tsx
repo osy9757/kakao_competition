@@ -14,9 +14,13 @@ const PageContainer = styled('div')`
 `;
 
 interface ImageResult {
-  imageUrl: string;
-  heatmapUrl: string;
-  description: string;
+    imageUrl: string;
+    heatmapUrl: string;
+    description: string;
+    idx: number;
+    lng: number;
+    lat: number;
+    overview: string;
 }
 
 const MainPage: React.FC = () => {
@@ -28,23 +32,36 @@ const MainPage: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const API_URL = "http://43.202.138.58:8000/kyh/";
 
+
+
     const transformAPIResponse = (apiResponse: any): ImageResult[] => {
         const results: ImageResult[] = [];
         for (let i = 1; i <= 3; i++) {
             const item = apiResponse[i];
             if (item) {
-                let description = "No description available"; 
+                let jsonData: any = {};
                 try {
                     if (item.json_data && item.json_data.trim() !== "") {
-                        description = JSON.parse(item.json_data).name;
+                        jsonData = JSON.parse(item.json_data);
                     }
                 } catch (error) {
                     console.error(`Failed to parse json_data for item ${i}:`, error);
                 }
+                
+                const description = jsonData.name || "No description available";
+                const idx = jsonData.idx || null;
+                const lng = jsonData.lng || null;
+                const lat = jsonData.lat || null;
+                const overview = jsonData.overview || "No overview available";
+    
                 results.push({
                     imageUrl: item.image,
                     heatmapUrl: item.heatmap,
-                    description: description
+                    description: description,
+                    idx: idx,
+                    lng: lng,
+                    lat: lat,
+                    overview: overview
                 });
             }
         }
@@ -83,6 +100,7 @@ const MainPage: React.FC = () => {
             if (apiResponse.status === 200) {
                 const transformedResults = transformAPIResponse(apiResponse.data);
                 setResultImages(transformedResults);
+                console.log(transformedResults)
                 
             } else {
                 console.error(`Error occurred: ${apiResponse.status} - ${apiResponse.data}`);

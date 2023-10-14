@@ -26,6 +26,10 @@ interface ImageResult {
     imageUrl: string;
     heatmapUrl: string;
     description: string;
+    idx: number;
+    lng: number;
+    lat: number;
+    overview: string;
 }
 
 interface ResultImagesProps {
@@ -35,8 +39,9 @@ interface ResultImagesProps {
 const ResultImages: React.FC<ResultImagesProps> = ({ results }) => {
     const navigate = useNavigate();
 
-    const handleDetailsClick = (imageUrl: string, description: string) => {
-        navigate('/place', { state: { imageUrl, description } });
+    const handleDetailsClick = (result: ImageResult) => {
+        navigate('/place', { state: result });
+        console.log(result);
     }
 
     return (
@@ -45,7 +50,7 @@ const ResultImages: React.FC<ResultImagesProps> = ({ results }) => {
                 <ResultItem key={idx}>
                     <ImageWithHover imageUrl={result.imageUrl} heatmapUrl={result.heatmapUrl} />
                     <p>{result.description}</p>
-                    <button onClick={() => handleDetailsClick(result.imageUrl, result.description)}>자세히 알아보기</button>
+                    <button onClick={() => handleDetailsClick(result)}>자세히 알아보기</button>
                 </ResultItem>
             ))}
         </ResultContainer>

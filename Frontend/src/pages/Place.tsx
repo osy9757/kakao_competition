@@ -8,10 +8,19 @@ import { useLocation } from 'react-router-dom';
 
 const Place = () => {  
   const location = useLocation();
-  const { imageUrl, description } = location.state;
+  const { imageUrl, heatmapUrl, description, idx, lng, lat, overview } = location.state;
   
   return (
     <div className="tourplace">
+      <div>
+          <p><strong>Image URL:</strong> {imageUrl}</p>
+          {/* <p><strong>Heatmap URL:</strong> {heatmapUrl}</p> */}
+          <p><strong>Description:</strong> {description}</p>
+          <p><strong>Index (idx):</strong> {idx}</p>
+          <p><strong>Longitude (lng):</strong> {lng}</p>
+          <p><strong>Latitude (lat):</strong> {lat}</p>
+          <p><strong>Overview:</strong> {overview}</p>
+      </div>
       <PLACEINRFO />
       <PLACEMAP />
       <COMMENTS />
