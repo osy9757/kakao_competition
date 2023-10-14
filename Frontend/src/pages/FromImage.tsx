@@ -24,6 +24,7 @@ const MainPage: React.FC = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [imageDescription, setImageDescription] = useState<string>("");
     const [resultImages, setResultImages] = useState<ImageResult[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const API_URL = "http://43.202.138.58:8000/kyh/";
 
@@ -52,6 +53,7 @@ const MainPage: React.FC = () => {
     }, []);
     
     const handleLike = async () => {
+        setIsLoading(true); 
         setSelectedImage(`/img${currentImageIndex}.jpg`);        
         
         const formData = new FormData();
@@ -79,6 +81,8 @@ const MainPage: React.FC = () => {
             }
         } catch (error) {
             console.error(`Error occurred: ${error}`);
+        } finally {
+            setIsLoading(false); 
         }
     };
 
@@ -89,6 +93,7 @@ const MainPage: React.FC = () => {
     };
 
     const handleFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsLoading(true); 
         const file = e.target.files?.[0];
         if (file) {
             const fileURL = URL.createObjectURL(file);
@@ -112,6 +117,8 @@ const MainPage: React.FC = () => {
                 }
             } catch (error) {
                 console.error(`Error occurred: ${error}`);
+            } finally {
+                setIsLoading(false);  
             }
         }
     };
@@ -127,6 +134,7 @@ const MainPage: React.FC = () => {
                 onLike={handleLike} 
                 onCamera={handleCamera} 
                 onSkip={handleSkip} 
+                disabled={isLoading}
             />
             <input 
                 type="file" 

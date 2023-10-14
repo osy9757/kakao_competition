@@ -27,6 +27,7 @@ const ImageButtons = styled('div')`
     text-align: center;
 `;
 
+
 const StyledButton = styled('button')`
     margin: 0 5px;
     padding: 8px 15px;
@@ -42,6 +43,11 @@ const StyledButton = styled('button')`
     &:hover {
         background-color: #f7f7f7;
     }
+
+    &:disabled {
+        background-color: #e0e0e0; 
+        color: #a0a0a0; 
+    }
 `;
 
 interface ImageDisplayProps {
@@ -49,15 +55,16 @@ interface ImageDisplayProps {
     onLike: () => void;
     onCamera: () => void;
     imageUrl: string;
+    disabled: boolean;
 }
 
-const ImageDisplay: React.FC<ImageDisplayProps> = ({ onSkip, onLike, onCamera, imageUrl }) => {
+const ImageDisplay: React.FC<ImageDisplayProps> = ({ onSkip, onLike, onCamera, imageUrl, disabled }) => {
     return (
         <ImageContainer>
             <StyledImage src={imageUrl} alt="Display Image" />
             <ImageButtons>
-                <StyledButton onClick={onLike}>Like</StyledButton>
-                <StyledButton onClick={onCamera}>📷</StyledButton>
+                <StyledButton onClick={onLike} disabled={disabled} >Like</StyledButton>
+                <StyledButton onClick={onCamera} disabled={disabled}>📷</StyledButton>
                 <StyledButton onClick={onSkip}>Skip</StyledButton>
             </ImageButtons>
         </ImageContainer>
