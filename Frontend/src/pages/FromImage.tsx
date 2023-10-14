@@ -33,7 +33,14 @@ const MainPage: React.FC = () => {
         for (let i = 1; i <= 3; i++) {
             const item = apiResponse[i];
             if (item) {
-                const description = JSON.parse(item.json_data).name;
+                let description = "No description available"; 
+                try {
+                    if (item.json_data && item.json_data.trim() !== "") {
+                        description = JSON.parse(item.json_data).name;
+                    }
+                } catch (error) {
+                    console.error(`Failed to parse json_data for item ${i}:`, error);
+                }
                 results.push({
                     imageUrl: item.image,
                     heatmapUrl: item.heatmap,
@@ -71,11 +78,12 @@ const MainPage: React.FC = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-    
+            console.log('apiResponse')
+            console.log(apiResponse.data)
             if (apiResponse.status === 200) {
                 const transformedResults = transformAPIResponse(apiResponse.data);
                 setResultImages(transformedResults);
-                console.log(resultImages)
+                
             } else {
                 console.error(`Error occurred: ${apiResponse.status} - ${apiResponse.data}`);
             }

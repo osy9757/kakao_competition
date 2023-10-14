@@ -55,7 +55,7 @@ const ResultImages: React.FC<ResultImagesProps> = ({ results }) => {
 const ImageWithHover: React.FC<{ imageUrl: string; heatmapUrl: string }> = ({ imageUrl, heatmapUrl }) => {
     const [isHovered, setIsHovered] = useState(false);
 
-    const fullImageUrl = `https://first333.s3.ap-northeast-2.amazonaws.com/${imageUrl}`;
+    const fullImageUrl = `${imageUrl}`;
     const fullHeatmapUrl = `data:image/jpeg;base64,${heatmapUrl}`;  
     return (
         <img 
