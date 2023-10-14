@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate  } from 'react-router-dom';
 
 const ResultContainer = styled('div')`
     display: grid;
@@ -32,12 +33,19 @@ interface ResultImagesProps {
 }
 
 const ResultImages: React.FC<ResultImagesProps> = ({ results }) => {
+    const navigate = useNavigate();
+
+    const handleDetailsClick = (imageUrl: string, description: string) => {
+        navigate('/place', { state: { imageUrl, description } });
+    }
+
     return (
         <ResultContainer>
             {results.map((result, idx) => (
                 <ResultItem key={idx}>
                     <ImageWithHover imageUrl={result.imageUrl} heatmapUrl={result.heatmapUrl} />
                     <p>{result.description}</p>
+                    <button onClick={() => handleDetailsClick(result.imageUrl, result.description)}>자세히 알아보기</button>
                 </ResultItem>
             ))}
         </ResultContainer>
