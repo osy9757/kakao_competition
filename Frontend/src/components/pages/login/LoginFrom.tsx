@@ -6,6 +6,8 @@ import { Login } from "../../../lib/types/login";
 import KakaoLogin from "./Kakao";
 import LoginHandler from "../../../pages/LoginHandler";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginSlice } from "../../../lib/redux/store";
 
 type login = Login;
 
@@ -61,10 +63,11 @@ const LoginForm: React.FC = () => {
     navigate("/findpwd");
   };
 
+  const dispatch = useDispatch();
   const noramlLoginHandler = () => {
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_BE_API}users/login`,
+      url: `http://${process.env.REACT_APP_BE_API}/users/login`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -72,7 +75,8 @@ const LoginForm: React.FC = () => {
     })
       .then((res) => {
         window.alert("로그인 성공!");
-        localStorage.setItem("toekn", res.data.accessToken);
+        dispatch(loginSlice.actions.login());
+        localStorage.setItem("token", res.data.accessToken);
         navigate("/main", { replace: true });
       })
       .catch((err) => {

@@ -93,7 +93,7 @@ const SignUp2: React.FC<SignUp2Props> = ({
 
         axios({
           method: "post",
-          url: `http://${process.env.REACT_APP_BE_API}/login/aouth2/kakao`,
+          url: `http://${process.env.REACT_APP_BE_API}/login/oauth2/kakao`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -105,9 +105,8 @@ const SignUp2: React.FC<SignUp2Props> = ({
         })
           .then((res) => {
             alert("회원가입 성공!");
-            navigate("/login");
             dispatch(kakaoSlice.actions.kakaologin(false));
-            dispatch(loginSlice.actions.login);
+            navigate("/login");
           })
           .catch((err) => {
             //  err 로직 설정
