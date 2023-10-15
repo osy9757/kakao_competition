@@ -36,6 +36,7 @@ const MainPage: React.FC = () => {
             try {
                 const response = await axios.get(`${API_URL}send_random/`);
                 if (response.status === 200) {
+                    console.log("Received random images:", response.data);
                     setImageList(response.data);
                     setMainImage(response.data[0]);
                 }
@@ -84,15 +85,15 @@ const MainPage: React.FC = () => {
     };
 
     useEffect(() => {
-    const interval = setInterval(() => {
-        // mainImage가 기본 이미지일 경우에만 이미지 인덱스를 업데이트
-        if (mainImage === `/img${currentImageIndex}.jpg`) {
-            setCurrentImageIndex(prevIndex => (prevIndex < 5 ? prevIndex + 1 : 1));
-            setMainImage(`/img${currentImageIndex}.jpg`);
-        }
-    }, 5000);
-    return () => clearInterval(interval);
-}, [currentImageIndex, mainImage]);
+        const interval = setInterval(() => {
+            setCurrentImageIndex(prevIndex => {
+                const newIndex = (prevIndex + 1) % 6;
+                setMainImage(imageList[newIndex]);
+                return newIndex;
+            });
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [imageList]);
 
     const handleLike = () => {
         callAPI(mainImage!);
