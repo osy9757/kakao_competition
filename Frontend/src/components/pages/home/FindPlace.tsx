@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FindPlace = () => {
   // 여행 이미지
@@ -35,6 +36,11 @@ const FindPlace = () => {
     return () => clearInterval(intervalId); // 컴포넌트 언마운트될 때 interval 제거
   }, []);
 
+  const navigate = useNavigate();
+  const btnHandler = () => {
+    navigate("/fromimage");
+  };
+
   return (
     <div className="findplace">
       <div className="placecontainer">
@@ -46,7 +52,9 @@ const FindPlace = () => {
             </p>
           </div>
           <div className="btnwrapper">
-            <button className="searchbtn">국내 여행지 추천받기</button>
+            <button className="searchbtn" onClick={btnHandler}>
+              국내 여행지 추천받기
+            </button>
           </div>
         </div>
         <div className="right">
