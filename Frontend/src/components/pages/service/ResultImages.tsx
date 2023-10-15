@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
+const MAX_STORAGE_SIZE = 5 * 1024 * 1024; // 5MB
 
 const ResultContainer = styled('div')`
     display: grid;
@@ -40,8 +42,38 @@ const ResultImages: React.FC<ResultImagesProps> = ({ results }) => {
     const navigate = useNavigate();
 
     const handleDetailsClick = (result: ImageResult) => {
-        navigate('/place', { state: result });
-        console.log(result);
+        try {
+            const item = {
+                data: result,
+                timestamp: new Date().getTime()
+            };
+
+            localStorage.setItem(`place_${result.idx}`, JSON.stringify(item));
+        } catch (e) {
+            if (e instanceof DOMException && e.code === 22) {
+                const keys: string[] = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    keys.push(localStorage.key(i) as string);
+                }
+
+                keys.sort((a, b) => {
+                    const itemA = JSON.parse(localStorage.getItem(a) as string);
+                    const itemB = JSON.parse(localStorage.getItem(b) as string);
+                    return itemA.timestamp - itemB.timestamp;
+                });
+
+                while (keys.length && JSON.stringify(localStorage).length >= MAX_STORAGE_SIZE) {
+                    localStorage.removeItem(keys.shift() as string);
+                }
+
+                // Retry saving after clearing old data
+                handleDetailsClick(result);
+            } else {
+                console.error('LocalStorage Error:', e);
+            }
+        }
+
+        navigate(`/place/${result.idx}`);
     }
 
     return (
@@ -71,5 +103,6 @@ const ImageWithHover: React.FC<{ imageUrl: string; heatmapUrl: string }> = ({ im
         />
     );
 }
+
 
 export default ResultImages;

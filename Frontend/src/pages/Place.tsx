@@ -7,8 +7,15 @@ import { useLocation } from 'react-router-dom';
 
 
 const Place = () => {  
-  const location = useLocation();
-  const { imageUrl, heatmapUrl, description, idx, lng, lat, overview } = location.state;
+  const params = useParams<{ idx: string }>();
+  const storedDataStr = localStorage.getItem(`place_${params.idx}`);
+  if (!storedDataStr) {
+      return <div>Error</div>;
+  }
+
+  const storedData = JSON.parse(storedDataStr).data;
+  const { imageUrl, heatmapUrl, description, idx, lng, lat, overview } = storedData;
+
   
   return (
     <div className="tourplace">
