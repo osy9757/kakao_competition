@@ -23,12 +23,31 @@ interface ImageResult {
 }
 
 const MainPage: React.FC = () => {
-    const [currentImageIndex, setCurrentImageIndex] = useState<number>(1);
-    const [mainImage, setMainImage] = useState<string | null>(`/img${currentImageIndex}.jpg`);
+    const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+    const [mainImage, setMainImage] = useState<string | null>(null);
+    const [imageList, setImageList] = useState<string[]>([]);
     const [resultImages, setResultImages] = useState<ImageResult[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const API_URL = "http://43.202.138.58:8000/kyh/";
+
+    useEffect(() => {
+        const fetchRandomImages = async () => {
+            try {
+                const response = await axios.get(`${API_URL}send_random/`);
+                if (response.status === 200) {
+                    setImageList(response.data);
+                    setMainImage(response.data[0]);
+                }
+            } catch (error) {
+                console.error(`Error fetching random images: ${error}`);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchRandomImages();
+    }, []);
 
     const transformAPIResponse = (apiResponse: any): ImageResult[] => {
         const results: ImageResult[] = [];
@@ -76,8 +95,7 @@ const MainPage: React.FC = () => {
 }, [currentImageIndex, mainImage]);
 
     const handleLike = () => {
-        setMainImage(`/img${currentImageIndex}.jpg`);
-        callAPI(`/img${currentImageIndex}.jpg`);
+        callAPI(mainImage!);
     };
 
     const callAPI = async (imgPath: string) => {
@@ -125,14 +143,14 @@ const MainPage: React.FC = () => {
     };
 
     const handleSkip = () => {
-        setCurrentImageIndex(prevIndex => (prevIndex < 5 ? prevIndex + 1 : 1));
-        setMainImage(`/img${currentImageIndex}.jpg`);
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 6);
+        setMainImage(imageList[(currentImageIndex + 1) % 6]);
     };
 
     return (
         <PageContainer>
             <ImageDisplay
-                imageUrl={mainImage || '/img1.jpg'}
+                imageUrl={mainImage || ''}
                 onLike={handleLike}
                 onCamera={handleCamera}
                 onSkip={handleSkip}

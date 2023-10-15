@@ -27,15 +27,22 @@ a:active {
   background-color: var(--nav-bg-color);
 }
 
-.navbar__logo {
-  font-size: 24px;
-}
+
 .navbar__logo a {
-  display: block; /* By default, the text is visible */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.navbar__logo img {
-  display: none; /* By default, the icon is hidden */
+.navbar__logo a img {
+  width: 24px; 
+  height: auto;
+  display: none;
+}
+
+.navbar__logo a span {
+  display: block; 
+  font-size: 20px; 
 }
 
 .navbar__menu {
@@ -101,13 +108,19 @@ a:active {
 
 @media screen and (max-width: 768px) {
   .navbar__logo a {
-    display: none; /* Hide the text on small screens */
+      display: flex;
+      align-items: center;
+      justify-content: center;
   }
 
-  .navbar__logo img {
-    width: 24px; /* Adjust the width as needed */
-    height: auto;
-    display: block; /* Show the icon on small screens */
+  .navbar__logo a img {
+      width: 24px; 
+      height: auto;
+      display: block;
+  }
+
+  .navbar__logo a span {
+      display: none; 
   }
   .navbar {
     flex-direction: column;

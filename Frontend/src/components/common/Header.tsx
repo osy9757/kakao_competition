@@ -10,8 +10,10 @@ const Header: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar__logo">
-        <a href="/main">어서와~여기는 처음이지?</a>
-        <img src="/icon.png" alt="Logo Icon" />
+            <a href="/main">
+              <span>어서와~여기는 처음이지?</span>
+              <img src="/icon.png" alt="Logo Icon" />
+            </a>
       </div>
 
 
