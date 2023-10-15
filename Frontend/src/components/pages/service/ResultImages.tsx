@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+
+const MAX_STORAGE_SIZE = 5 * 1024 * 1024; // 5MB
 
 const ResultContainer = styled("div")`
   display: grid;
@@ -82,5 +84,6 @@ const ImageWithHover: React.FC<{ imageUrl: string; heatmapUrl: string }> = ({
     />
   );
 };
+
 
 export default ResultImages;
