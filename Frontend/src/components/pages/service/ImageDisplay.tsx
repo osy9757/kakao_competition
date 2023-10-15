@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from "react-redux";
+import { RootState } from "../../../lib/types/redux";
+
 
 const ImageContainer = styled('div')`
     display: flex;
@@ -56,19 +59,38 @@ interface ImageDisplayProps {
     onCamera: () => void;
     imageUrl: string;
     disabled: boolean;
+    
 }
 
-const ImageDisplay: React.FC<ImageDisplayProps> = ({ onSkip, onLike, onCamera, imageUrl, disabled }) => {
-    return (
-        <ImageContainer>
-            <StyledImage src={imageUrl} alt="Display Image" />
-            <ImageButtons>
-                <StyledButton onClick={onLike} disabled={disabled} >Like</StyledButton>
-                <StyledButton onClick={onCamera} disabled={disabled}>📷</StyledButton>
-                <StyledButton onClick={onSkip}>Skip</StyledButton>
-            </ImageButtons>
-        </ImageContainer>
-    );
+const ImageDisplay: React.FC<ImageDisplayProps> = ({ onSkip, onLike, onCamera, imageUrl, disabled }) => {    
+  const isLogin = useSelector((state: RootState) => state.login.value);
+
+  const handleLikeClick = () => {
+    if (isLogin) {
+        onLike();
+    } else {
+        window.alert("로그인 후 사용 가능합니다!");
+    }
+  };
+
+const handleCameraClick = () => {
+    if (isLogin) {
+        onCamera();
+    } else {
+        window.alert("로그인 후 사용 가능합니다!");
+    }
+  };
+
+  return (
+    <ImageContainer>
+        <StyledImage src={imageUrl} alt="Display Image" />
+        <ImageButtons>
+            <StyledButton onClick={handleLikeClick} disabled={disabled}>Like</StyledButton>
+            <StyledButton onClick={handleCameraClick} disabled={disabled}>📷</StyledButton>
+            <StyledButton onClick={onSkip}>Skip</StyledButton>
+        </ImageButtons>
+    </ImageContainer>
+);
 }
 
 export default ImageDisplay;
