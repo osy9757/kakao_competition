@@ -30,7 +30,13 @@ const categoryData: CategoryItem[] = [
   { name: "숙박", code: "AD5" },
 ];
 
-export const PLACEMAP = () => {
+type mapProps = {
+  name: string;
+  lat: number;
+  lng: number;
+};
+
+export const PLACEMAP = (props: mapProps) => {
   const [info, setInfo] = useState<MarkerType | null>(null);
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [map, setMap] = useState<any | null>(null);
@@ -86,7 +92,7 @@ export const PLACEMAP = () => {
           map.setBounds(bounds);
         }
       },
-      { x: 35.15319327, y: 129.11897609, useMapBounds: true }
+      { x: props.lat, y: props.lng, useMapBounds: true }
     );
   }, [map, category]);
 
@@ -106,14 +112,14 @@ export const PLACEMAP = () => {
         ))}
       </div>
       <Map
-        center={{ lat: 35.15319327, lng: 129.11897609 }}
+        center={{ lat: props.lat, lng: props.lng }}
         style={{ width: "100%", height: "360px" }}
         onCreate={setMap}
       >
         <MapTypeControl position={"TOPRIGHT"} />
         <ZoomControl position={"RIGHT"} />
-        <MapMarker position={{ lat: 35.15319327, lng: 129.11897609 }}>
-          <div style={{ color: "#000" }}>광안리 해수욕장</div>
+        <MapMarker position={{ lat: props.lat, lng: props.lng }}>
+          <div style={{ color: "#000" }}>{props.name}</div>
         </MapMarker>
         {showMarkers &&
           markers.map((marker) => (

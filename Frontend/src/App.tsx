@@ -40,7 +40,7 @@ const App: React.FC = () => {
               <Route path="/main" element={<Home />} />
               {/* 여행지 찾기 */}
               <Route path="/fromimage" element={<FromeImage />} />
-              <Route path="/place/:idx" element={<Place />} />
+              <Route path="/place/:placeName" element={<Place />} />
               <Route path="/postreview/:id" element={<PostReview />} />
               {/* 로그인 */}
               <Route path="/signup" element={<SignUp />} />
