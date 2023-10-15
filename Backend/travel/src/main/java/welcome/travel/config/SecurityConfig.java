@@ -24,7 +24,7 @@ public class SecurityConfig {
     @Value("${server.ip}")
     private String SERVER_IP;
 
-    private static final String DOMAIN_NAME = "http://welcom2ko.s3-website.ap-northeast-2.amazonaws.com/main";
+    private static final String DOMAIN_NAME = "http://welcom2ko.s3-website.ap-northeast-2.amazonaws.com";
 
     private static final String LOCAL_APP_PORT_3000 = "http://localhost:3000";
     private static final String LOCAL_APP_PORT_8080 = "http://localhost:8080";
