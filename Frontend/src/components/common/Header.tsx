@@ -19,19 +19,8 @@ const Header: React.FC = () => {
           <li><a href="/main">Home</a></li>
           <li><a href="/main">About</a></li>
           <li className='dropdown'>
-            <a href="#">Service</a>
-            <div className='dropdown-options'>
-              <a href="/fromimage">이미지로 찾기</a>
-              <a href="/fromtext">텍스트로 찾기</a>
-            </div>
-          </li>
-          <li className='dropdown'>
-            <a href="#">More</a>
-            <div className='dropdown-options'>
-              <a href="/fromimage">이미지로 찾기</a>
-              <a href="/fromtext">텍스트로 찾기</a>
-            </div>
-          </li>
+            <a href="/fromimage">Service</a>
+          </li>         
         </ul>
       </div>
 
