@@ -30,6 +30,13 @@ a:active {
 .navbar__logo {
   font-size: 24px;
 }
+.navbar__logo a {
+  display: block; /* By default, the text is visible */
+}
+
+.navbar__logo img {
+  display: none; /* By default, the icon is hidden */
+}
 
 .navbar__menu {
   display: flex;
@@ -93,6 +100,15 @@ a:active {
 }
 
 @media screen and (max-width: 768px) {
+  .navbar__logo a {
+    display: none; /* Hide the text on small screens */
+  }
+
+  .navbar__logo img {
+    width: 24px; /* Adjust the width as needed */
+    height: auto;
+    display: block; /* Show the icon on small screens */
+  }
   .navbar {
     flex-direction: column;
     align-items: flex-start;
