@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { push } from 'connected-react-router';
 import { RootState } from "../../lib/types/redux";
+import { useNavigate } from 'react-router-dom';
+
 import '../../styles/common/Header.css';
 
 const Header: React.FC = () => {
   const [menuActive, setMenuActive] = useState(false);
   const isLogin = useSelector((state: RootState) => state.login.value);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenuActive(!menuActive);
@@ -23,38 +27,38 @@ const Header: React.FC = () => {
 
       <div className="navbar__center">
         <ul className={`navbar__menu ${menuActive ? 'active' : ''}`}>
-          <li><a href="/main">Home</a></li>
+          <li><a onClick={() => navigate('/main')}>Home</a></li>
           <li><a href="/main">About</a></li>
           <li className='dropdown'>
-            <a href="/fromimage">Service</a>
+            <a onClick={() => navigate('/fromimage')}>Service</a>
           </li>         
         </ul>
       </div>
 
       <div className="navbar__right">
-          <ul className={`navbar__menu ${menuActive ? 'active' : ''}`}>
-              {isLogin ? (
-                  <li className='dropdown'>
-                      <a href="#">
-                        <img src="/profile_icon.png" alt="Profile Icon" />
-                      </a>
-                      <div className='dropdown-options'>
-                          <a href="/userinfo">로그아웃</a>
-                          <a href="/userinfo">마이페이지</a>
-                      </div>
-                  </li>
-              ) : (
-                  <li className='dropdown'>
-                      <a href="#">Signin</a>
-                      <div className='dropdown-options'>
-                          <a href="/login">로그인</a>
-                          <a href="/signup">회원가입</a>
-                          <a href="/findpwd">아이디<br></br>비밀번호찾기</a>
-                      </div>
-                  </li>
-              )}
-          </ul>
-      </div>
+        <ul className={`navbar__menu ${menuActive ? 'active' : ''}`}>
+            {isLogin ? (
+                <li className='dropdown' onClick={() => navigate('/userinfo')}>
+                    <a>
+                      <img src="/profile_icon.png" alt="Profile Icon" />
+                    </a>
+                    <div className='dropdown-options'>
+                        <a onClick={() => navigate('/userinfo')}>로그아웃</a>
+                        <a onClick={() => navigate('/userinfo')}>마이페이지</a>
+                    </div>
+                </li>
+            ) : (
+                <li className='dropdown'>
+                    <a onClick={() => navigate('/login')}>Signin</a>
+                    <div className='dropdown-options'>
+                        <a onClick={() => navigate('/login')}>로그인</a>
+                        <a onClick={() => navigate('/signup')}>회원가입</a>
+                        <a onClick={() => navigate('/findpwd')}>아이디<br></br>비밀번호찾기</a>
+                    </div>
+                </li>
+            )}
+        </ul>
+    </div>
 
 
       <a href="#" className="navbar__toggleBtn" onClick={toggleMenu}>☰</a>

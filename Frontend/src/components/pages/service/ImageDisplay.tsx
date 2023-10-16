@@ -30,7 +30,6 @@ const ImageButtons = styled('div')`
     text-align: center;
 `;
 
-
 const StyledButton = styled('button')`
     margin: 0 5px;
     padding: 8px 15px;
