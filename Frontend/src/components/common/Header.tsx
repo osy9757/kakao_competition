@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../lib/types/redux";
 import { useNavigate } from "react-router-dom";
 import "../../styles/common/Header.css";
+import { loginSlice } from "../../lib/redux/store";
 
 const Header: React.FC = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -17,6 +18,8 @@ const Header: React.FC = () => {
     e.preventDefault();
     navigate(path);
   };
+
+  const dispatch = useDispatch();
 
   return (
     <nav className="navbar">
@@ -57,7 +60,12 @@ const Header: React.FC = () => {
               <div className="dropdown-options">
                 <a
                   href="/userinfo"
-                  onClick={(e) => handleClick(e, "/userinfo")}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    localStorage.removeItem("token");
+                    dispatch(loginSlice.actions.logout());
+                    navigate("/main", { replace: true });
+                  }}
                 >
                   로그아웃
                 </a>

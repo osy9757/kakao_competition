@@ -7,11 +7,7 @@ const Footer = () => {
         <div className="footertop">
           <div className="aboutteam">
             <h3>About Team</h3>
-            <p>
-              간략한 팀 설명 어쩌구 <br />
-              ~~~ <br />
-              ~~~~ <br />
-            </p>
+            <p>어서와~여기는 처음이지</p>
           </div>
           <div className="pages">
             <h3>Pages</h3>
@@ -21,15 +17,14 @@ const Footer = () => {
           </div>
           <div className="resources">
             <h3>Resources</h3>
-            <p>A</p>
-            <p>B</p>
-            <p>C</p>
+            <p>한국 관광공사</p>
+            <p>카카오</p>
           </div>
           <div className="contact">
             <h3>Contact</h3>
-            <p>mail@example.com</p>
+            <p>welcome2ko@gmail.com</p>
             <p>+1 222 212 3819</p>
-            <p>서울시 주소 샬라샬라</p>
+            <p>서울시</p>
           </div>
         </div>
         <div className="footerdown">
