@@ -35,11 +35,12 @@ const Header: React.FC = () => {
           <ul className={`navbar__menu ${menuActive ? 'active' : ''}`}>
               {isLogin ? (
                   <li className='dropdown'>
-                      <a href="#">Login</a>
+                      <a href="#">
+                        <img src="/profile_icon.png" alt="Profile Icon" />
+                      </a>
                       <div className='dropdown-options'>
-                          <a href="/login">로그인</a>
-                          <a href="/signup">회원가입</a>
-                          <a href="/findpwd">아이디<br></br>비밀번호찾기</a>
+                          <a href="/userinfo">로그아웃</a>
+                          <a href="/userinfo">마이페이지</a>
                       </div>
                   </li>
               ) : (

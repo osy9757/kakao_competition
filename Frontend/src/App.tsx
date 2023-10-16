@@ -52,8 +52,6 @@ const App: React.FC = () => {
               />
               {/* 마이페이지 */}
               <Route path="/userinfo" element={<UserInfo />} />
-              <Route path="/likeplaces" element={<LikePlaces />} />
-              <Route path="/likeusers" element={<LikeUsers />} />
               {/* 컴포넌트 연습 페이지 */}
               <Route path="/example" element={<Example />} />
             </Routes>

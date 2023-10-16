@@ -72,6 +72,10 @@ a:active {
   position: relative;
 }
 
+.dropdown a img {
+  width: 40px;
+}
+
 .dropdown-options {
   display: none;
   width: 150px;
