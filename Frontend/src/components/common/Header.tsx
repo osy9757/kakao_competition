@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import { push } from 'connected-react-router';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../lib/types/redux";
-import { useNavigate } from 'react-router-dom';
-
-import '../../styles/common/Header.css';
+import { useNavigate } from "react-router-dom";
+import "../../styles/common/Header.css";
+import { loginSlice } from "../../lib/redux/store";
 
 const Header: React.FC = () => {
   const [menuActive, setMenuActive] = useState(false);
@@ -15,53 +14,93 @@ const Header: React.FC = () => {
     setMenuActive(!menuActive);
   };
 
+  const handleClick = (e: React.MouseEvent, path: string) => {
+    e.preventDefault();
+    navigate(path);
+  };
+
+  const dispatch = useDispatch();
+
   return (
     <nav className="navbar">
       <div className="navbar__logo">
-            <a href="/main">
-              <span>어서와~여기는 처음이지?</span>
-              <img src="/icon.png" alt="Logo Icon" />
-            </a>
+        <a href="/main" onClick={(e) => handleClick(e, "/main")}>
+          <span>어서와~여기는 처음이지?</span>
+          <img src="/icon.png" alt="Logo Icon" />
+        </a>
       </div>
 
-
       <div className="navbar__center">
-        <ul className={`navbar__menu ${menuActive ? 'active' : ''}`}>
-          <li><a onClick={() => navigate('/main')}>Home</a></li>
-          <li><a href="/main">About</a></li>
-          <li className='dropdown'>
-            <a onClick={() => navigate('/fromimage')}>Service</a>
-          </li>         
+        <ul className={`navbar__menu ${menuActive ? "active" : ""}`}>
+          <li>
+            <a href="/main" onClick={(e) => handleClick(e, "/main")}>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="/main" onClick={(e) => handleClick(e, "/main")}>
+              About
+            </a>
+          </li>
+          <li className="dropdown">
+            <a href="/fromimage" onClick={(e) => handleClick(e, "/fromimage")}>
+              Service
+            </a>
+          </li>
         </ul>
       </div>
 
       <div className="navbar__right">
-        <ul className={`navbar__menu ${menuActive ? 'active' : ''}`}>
-            {isLogin ? (
-                <li className='dropdown' onClick={() => navigate('/userinfo')}>
-                    <a>
-                      <img src="/profile_icon.png" alt="Profile Icon" />
-                    </a>
-                    <div className='dropdown-options'>
-                        <a onClick={() => navigate('/userinfo')}>로그아웃</a>
-                        <a onClick={() => navigate('/userinfo')}>마이페이지</a>
-                    </div>
-                </li>
-            ) : (
-                <li className='dropdown'>
-                    <a onClick={() => navigate('/login')}>Signin</a>
-                    <div className='dropdown-options'>
-                        <a onClick={() => navigate('/login')}>로그인</a>
-                        <a onClick={() => navigate('/signup')}>회원가입</a>
-                        <a onClick={() => navigate('/findpwd')}>아이디<br></br>비밀번호찾기</a>
-                    </div>
-                </li>
-            )}
+        <ul className={`navbar__menu ${menuActive ? "active" : ""}`}>
+          {isLogin ? (
+            <li className="dropdown">
+              <a href="/userinfo" onClick={(e) => handleClick(e, "/userinfo")}>
+                <img src="/profile_icon.png" alt="Profile Icon" />
+              </a>
+              <div className="dropdown-options">
+                <a
+                  href="/userinfo"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    localStorage.removeItem("token");
+                    dispatch(loginSlice.actions.logout());
+                    navigate("/main", { replace: true });
+                  }}
+                >
+                  로그아웃
+                </a>
+                <a
+                  href="/userinfo"
+                  onClick={(e) => handleClick(e, "/userinfo")}
+                >
+                  마이페이지
+                </a>
+              </div>
+            </li>
+          ) : (
+            <li className="dropdown">
+              <a href="/login" onClick={(e) => handleClick(e, "/login")}>
+                Signin
+              </a>
+              <div className="dropdown-options">
+                <a href="/login" onClick={(e) => handleClick(e, "/login")}>
+                  로그인
+                </a>
+                <a href="/signup" onClick={(e) => handleClick(e, "/signup")}>
+                  회원가입
+                </a>
+                <a href="/findpwd" onClick={(e) => handleClick(e, "/findpwd")}>
+                  아이디<br></br>비밀번호찾기
+                </a>
+              </div>
+            </li>
+          )}
         </ul>
-    </div>
+      </div>
 
-
-      <a href="#" className="navbar__toggleBtn" onClick={toggleMenu}>☰</a>
+      <a href="#" className="navbar__toggleBtn" onClick={toggleMenu}>
+        ☰
+      </a>
     </nav>
   );
 };

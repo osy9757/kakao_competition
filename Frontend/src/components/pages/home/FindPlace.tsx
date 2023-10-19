@@ -47,8 +47,9 @@ const FindPlace = () => {
         <div className="left">
           <div className="textwrapper">
             <p className="tourinfo">
-              좋아하는 여행이 사진을 업로드하면 <br />
-              비슷한 국내 여행지를 추천해드려요!!
+              여행지 추천과 정보를 받기 위해
+              <br />
+              버튼을 클릭해보세요.
             </p>
           </div>
           <div className="btnwrapper">
