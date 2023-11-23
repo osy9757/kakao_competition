@@ -1,11 +1,13 @@
 package welcome.travel.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import welcome.travel.domain.Comment;
 import welcome.travel.domain.User;
-import welcome.travel.dto.CommentRequestDto;
+import welcome.travel.dto.request.CommentRequestDto;
 import welcome.travel.jwt.JwtTokenProvider;
 import welcome.travel.repository.CommentRepository;
 import welcome.travel.repository.UserRepository;
@@ -20,12 +22,10 @@ public class CommentService {
 
     /**
      * 댓글 등록
-     * @param token
-     * @param commentRequestDto
      */
     @Transactional
-    public void register(String token, CommentRequestDto commentRequestDto) {
-        // token으로 사용자 id값 찾기
+    public ResponseEntity<Comment> saveComment(String token, CommentRequestDto commentRequestDto) {
+
         String accessToken = token.substring("Bearer ".length());
         User user = userRepository.findByEmail(jwtTokenProvider.getEmailFromAccessToken(accessToken)).orElseThrow();
 
@@ -33,7 +33,6 @@ public class CommentService {
         String content = commentRequestDto.getContent();
         String place = commentRequestDto.getPlace();
 
-        // 댓글 정보 넣기(댓글 내용, 관광지 이름, 사용자 id)
         Comment comment = Comment.builder()
                 .content(content)
                 .place(place)
@@ -41,5 +40,9 @@ public class CommentService {
                 .build();
 
         commentRepository.save(comment);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(comment);
     }
 }

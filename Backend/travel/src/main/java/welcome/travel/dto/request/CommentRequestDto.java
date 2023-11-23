@@ -1,4 +1,4 @@
-package welcome.travel.dto;
+package welcome.travel.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

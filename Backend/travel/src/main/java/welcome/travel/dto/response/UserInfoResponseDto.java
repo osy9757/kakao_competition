@@ -1,9 +1,9 @@
-package welcome.travel.dto;
+package welcome.travel.dto.response;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class UserInfoResponseDto {
     private String nickname;

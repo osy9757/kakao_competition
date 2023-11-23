@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCode {
-    NOT_FOUND_USER(-1000, "등록된 사용자가 없습니다.", HttpStatus.NOT_FOUND),
-    INVALID_EMAIL(-1001, "해당 정보는 사용하실 수 없습니다.", HttpStatus.FORBIDDEN),
-    NO_COMMENTS(-1002, "등록된 댓글이 없습니다.", HttpStatus.NOT_FOUND);
+    NOT_FOUND_USER(-1000, "NOT FOUND USER", HttpStatus.NOT_FOUND),
+    INVALID_EMAIL(-1001, "FORBIDDEN", HttpStatus.FORBIDDEN),
+    NO_COMMENTS(-1002, "NOT FOUND COMMENT", HttpStatus.NOT_FOUND);
 
     ErrorCode(Integer code, String message, HttpStatus httpStatus) {
         this.code = code;

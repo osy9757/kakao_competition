@@ -7,21 +7,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import welcome.travel.dto.MessageDto;
 import welcome.travel.dto.SmsConfirmDto;
-import welcome.travel.dto.SmsRequestDto;
-import welcome.travel.dto.SmsResponseDto;
+import welcome.travel.dto.request.SmsRequestDto;
 import org.springframework.http.HttpHeaders;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -34,7 +31,6 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class SmsService {
     private final String smsConfirmNum = createSmsKey();
-//    private final SmsRepository smsRepository;
 
     @Value("${naver-cloud-sms.accessKey}")
     private String accessKey;
@@ -74,17 +70,14 @@ public class SmsService {
         log.info(smsRequestDto.getContent());
         ObjectMapper objectMapper = new ObjectMapper();
         String body = objectMapper.writeValueAsString(smsRequestDto);
-        HttpEntity<String> http = new HttpEntity<>(body, headers);
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), http, SmsResponseDto.class);
 
-        SmsConfirmDto smsConfirmNumber = SmsConfirmDto.builder()
+
+        return SmsConfirmDto.builder()
                 .confirmNumber(smsConfirmNum)
                 .build();
-
-        return smsConfirmNumber;
     }
 
     // 난수조합해서 인증코드 만들기
@@ -121,8 +114,7 @@ public class SmsService {
         mac.init(signingKey);
 
         byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
-        String encodeBase64String = Base64.encodeBase64String(rawHmac);
-        return encodeBase64String;
+        return Base64.encodeBase64String(rawHmac);
     }
 
 }

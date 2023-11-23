@@ -22,7 +22,7 @@ import java.util.List;
 public class SecurityConfig {
 
     @Value("${server.ip}")
-    private String SERVER_IP;
+    private String serverIp;
 
     private static final String LOCAL_APP_PORT_3000 = "http://localhost:3000";
     private static final String LOCAL_APP_PORT_8080 = "http://localhost:8080";
@@ -30,7 +30,7 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
 
     private String getServerUrl(String port) {
-        return "http://" + SERVER_IP + ":" + port;
+        return "http://" + serverIp + ":" + port;
     }
 
     private CorsConfiguration getCorsConfiguration() {

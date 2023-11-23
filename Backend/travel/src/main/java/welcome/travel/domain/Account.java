@@ -16,5 +16,4 @@ public class Account {
     private Long kakaoId;
     private String email;
     private String kakaoName;
-    // 기타 필드 및 메서드가 필요한 경우 추가
 }

@@ -1,49 +1,47 @@
 package welcome.travel.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 
 @Getter
-@Setter
-@Data
+@AllArgsConstructor
 public class KakaoAccountDto {
     private Long id;
-    private LocalDateTime connected_at;
+    private LocalDateTime connectedAt;
     private Properties properties;
-    private KakaoAccount kakao_account;
+    private KakaoAccount kakaoAccount;
 
-    public class Properties {
+    @Getter
+    @AllArgsConstructor
+    public static class Properties {
         private String nickname;
-        private String profile_image;
-        private String thumbnail_image;
+        private String profileImage;
+        private String thumbnailImage;
     }
 
     @Getter
-    @Setter
-    public class KakaoAccount {
-        private Boolean profile_nickname_needs_agreement;
-        private Boolean profile_image_needs_agreement;
+    @AllArgsConstructor
+    public static class KakaoAccount {
+        private Boolean profileNicknameNeedsAgreement;
+        private Boolean profileImageNeedsAgreement;
         private Profile profile;
+        private Boolean hasEmail;
+        private Boolean emailNeedsAgreement;
+        private Boolean isEmailValid;
+        private Boolean isEmailVerified;
+        private String email;
 
         @Getter
-        @Setter
-        public class Profile {
+        @AllArgsConstructor
+        public static class Profile {
             private String nickname;
-            private String thumbnail_image_url;
-            private String profile_image_url;
-            private Boolean is_default_image;
-
+            private String thumbnailImageUrl;
+            private String profileImageUrl;
+            private Boolean isDefaultImage;
         }
-
-        private Boolean has_email;
-        private Boolean email_needs_agreement;
-        private Boolean is_email_valid;
-        private Boolean is_email_verified;
-        private String email;
     }
 
 }
