@@ -12,6 +12,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import welcome.travel.exception.ClientException;
+import welcome.travel.exception.ErrorCode;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -25,25 +27,15 @@ public class JwtTokenProvider {
 
     private final Key key;
 
-    // 토큰의 암호화 복호화를 위한 secret key
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // 유저 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
     public TokenInfo generateToken(Authentication authentication) {
-        //권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-//
-//        Collection<? extends GrantedAuthority> defaultAuthorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
-//
-//        // 권한을 쉼표로 구분된 문자열로 변환
-//        String authoritiesString = defaultAuthorities.stream()
-//                .map(GrantedAuthority::getAuthority)
-//                .collect(Collectors.joining(","));
 
         long now = new Date().getTime();
         //Access Token 생성
@@ -62,7 +54,7 @@ public class JwtTokenProvider {
                 .signWith(key,SignatureAlgorithm.HS256)
                 .compact();
 
-        log.info("ACCESSTOKEN : {}",accessToken);
+        log.info("ACCESS TOKEN : {}",accessToken);
 
         return TokenInfo.builder()
                 .grantType("Bearer")
@@ -71,24 +63,21 @@ public class JwtTokenProvider {
                 .build();
     }
 
-    // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {
         //토큰 복호화
         Claims claims = parseClaims(accessToken);
 
         if (claims.get("auth") == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            throw new ClientException(ErrorCode.INVALID_TOKEN);
         }
 
         log.info("권한 :: {}",claims.get("auth"));
 
-        // 클레임에서 권한 정보 가져오기
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get("auth").toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        // UserDetails 객체를 만들어서 Authentication 리턴
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
@@ -99,7 +88,6 @@ public class JwtTokenProvider {
         return claims.get("sub", String.class);
     }
 
-    // 토큰 정보를 검증하는 메서드
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);

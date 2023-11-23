@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,54 +19,38 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import welcome.travel.domain.Account;
 import welcome.travel.domain.User;
 import welcome.travel.dto.KakaoAccountDto;
-import welcome.travel.dto.KakaoLoginResponseDto;
 import welcome.travel.dto.KakaoTokenDto;
-import welcome.travel.domain.Account;
-import welcome.travel.dto.SocialLoginRequestDto;
-import welcome.travel.exception.ClientException;
-import welcome.travel.exception.ErrorCode;
+import welcome.travel.dto.request.KakaoLoginResponseDto;
+import welcome.travel.dto.request.SocialLoginRequestDto;
 import welcome.travel.jwt.JwtTokenProvider;
 import welcome.travel.jwt.TokenInfo;
-import welcome.travel.repository.AccountRepository;
 import welcome.travel.repository.UserRepository;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class AuthService {
-    private final AccountRepository accountRepository;
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
-    private static final String defaultpassword = "0000";
+    private final Environment env;
+    private static final String PASSWORD = "0000";
     private Boolean flag = false;
 
-    @Value("${kakao.KAKAO_CLIENT_ID}")
-    private String KAKAO_CLIENT_ID;
-
-    @Value("${kakao.KAKAO_CLIENT_SECRET}")
-    private String KAKAO_CLIENT_SECRET;
-
-    @Value("${kakao.KAKAO_REDIRECT_URI}")
-    private String KAKAO_REDIRECT_URI;
-
-    @Value("${kakao.KAKAO_TOKEN_URI}")
-    private String KAKAO_TOKEN_URI;
-
-    @Value("${kakao.KAKAO_USER_INFO_URI}")
-    private String KAKAO_USER_INFO_URI;
-
     @Transactional
-    public void processAfterKakao(String token, SocialLoginRequestDto socialLoginRequestDto) {
+    public ResponseEntity<User> processAfterKakao(String token, SocialLoginRequestDto socialLoginRequestDto) {
         String accessToken = token.substring("Bearer ".length());
         User user = userRepository.findByEmail(jwtTokenProvider.getEmailFromAccessToken(accessToken)).orElseThrow();
 
-        user.updateKakao(socialLoginRequestDto.getPhoneNumber(), socialLoginRequestDto.getAgree_info(), socialLoginRequestDto.getAgree_marketing());
+        user.updateKakao(socialLoginRequestDto.getPhoneNumber(), socialLoginRequestDto.getAgreeInfo(), socialLoginRequestDto.getAgreeMarketing());
 
-        userRepository.save(user);
+        return ResponseEntity.ok(user);
     }
 
 
@@ -79,10 +63,10 @@ public class AuthService {
         // Http Response Body 객체 생성
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code"); //카카오 공식문서 기준 authorization_code 로 고정
-        params.add("client_id", KAKAO_CLIENT_ID); // 카카오 Dev 앱 REST API 키
-        params.add("redirect_uri", KAKAO_REDIRECT_URI); // 카카오 Dev redirect uri
+        params.add("client_id", env.getProperty("kakao.KAKAO_CLIENT_ID")); // 카카오 Dev 앱 REST API 키
+        params.add("redirect_uri", env.getProperty("kakao.KAKAO_REDIRECT_URI")); // 카카오 Dev redirect uri
         params.add("code", code); // 프론트에서 인가 코드 요청시 받은 인가 코드값
-        params.add("client_secret", KAKAO_CLIENT_SECRET); // 카카오 Dev 카카오 로그인 Client Secret
+        params.add("client_secret", env.getProperty("kakao.KAKAO_CLIENT_SECRET")); // 카카오 Dev 카카오 로그인 Client Secret
 
         // 헤더와 바디 합치기 위해 Http Entity 객체 생성
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
@@ -90,7 +74,7 @@ public class AuthService {
         // 카카오로부터 Access token 받아오기
         RestTemplate rt = new RestTemplate();
         ResponseEntity<String> accessTokenResponse = rt.exchange(
-                KAKAO_TOKEN_URI, // "https://kauth.kakao.com/oauth/token"
+                Objects.requireNonNull(env.getProperty("kakao.KAKAO_TOKEN_URI")),
                 HttpMethod.POST,
                 kakaoTokenRequest,
                 String.class
@@ -111,73 +95,34 @@ public class AuthService {
     }
 
     @Transactional
-    public KakaoLoginResponseDto kakaoLogin(KakaoTokenDto kakaoAccessTokenInfo) {
-        String kakaoAccessToken = kakaoAccessTokenInfo.getAccess_token();
-
-        // 토큰 기반으로 유저 정보 획득
+    public ResponseEntity<KakaoLoginResponseDto> kakaoLogin(String kakaoAccessToken) {
         Account account = getKakaoInfo(kakaoAccessToken);
-        String kakaoEmail = account.getEmail();
-        String kakaoNickName = account.getKakaoName();
+
         User user = User.builder()
-                .email(kakaoEmail)
-                .nickname(kakaoNickName)
-                .password(passwordEncoder.encode(defaultpassword))
+                .email(account.getEmail())
+                .nickname(account.getKakaoName())
+                .password(passwordEncoder.encode(PASSWORD))
                 .build();
         user.getRoles().add("KAKAO");
 
-        // 회원가입인 경우 DB에 저장
         User existUser = userRepository.findByEmail(user.getEmail()).orElse(null);
 
-//        LoginResponseDto loginResponseDto = new LoginResponseDto();
-//        loginResponseDto.setLoginSuccess(true);
-        // 유저가 존재하지 않을 경우 회원가입
         if (existUser == null) {
             flag = true;
             userRepository.save(user);
         }
 
-        // 유저 정보 바탕으로 자체토큰 생성
-        // 위에 String kakaoEmail
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(account.getEmail(), PASSWORD);
 
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authToken);
 
-        // Spring Security는 사용자 검증을 위해
-        // encoding된 password와 그렇지 않은 password를 비교
-
-        // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
-        // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(kakaoEmail, defaultpassword);
-
-        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
-        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-        // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
         KakaoLoginResponseDto kakaoLoginResponseDto = new KakaoLoginResponseDto();
         kakaoLoginResponseDto.setTokenInfo(tokenInfo);
         kakaoLoginResponseDto.setFlag(flag);
 
-        return kakaoLoginResponseDto;
-
-
-
-
-
-//        Account existOwner = accountRepository.findById(account.getId()).orElse(null);
-//        try {
-//            if (existOwner == null) {
-//                System.out.println("처음 로그인 하는 회원입니다.");
-//                accountRepository.save(account);
-//            }
-//            loginResponseDto.setLoginSuccess(true);
-//
-//            return ResponseEntity.ok().body(loginResponseDto);
-//
-//        } catch (Exception e) {
-//            loginResponseDto.setLoginSuccess(false);
-//            return ResponseEntity.badRequest().body(loginResponseDto);
-//        }
+        return ResponseEntity.ok(kakaoLoginResponseDto);
     }
 
     public Account getKakaoInfo(String kakaoAccessToken) {
@@ -191,7 +136,7 @@ public class AuthService {
 
         // POST 방식으로 API 서버에 요청 후 response 받아옴
         ResponseEntity<String> accountInfoResponse = rt.exchange(
-                KAKAO_USER_INFO_URI, // "https://kapi.kakao.com/v2/user/me"
+                Objects.requireNonNull(env.getProperty("kakao.KAKAO_USER_INFO_URI")), // "https://kapi.kakao.com/v2/user/me"
                 HttpMethod.POST,
                 accountInfoRequest,
                 String.class
@@ -208,20 +153,11 @@ public class AuthService {
             e.printStackTrace();
         }
 
+        assert kakaoAccountDto != null;
         return Account.builder()
-                .email(kakaoAccountDto.getKakao_account().getEmail())
-                .kakaoName(kakaoAccountDto.getKakao_account().getProfile().getNickname())
+                .email(kakaoAccountDto.getKakaoAccount().getEmail())
+                .kakaoName(kakaoAccountDto.getKakaoAccount().getProfile().getNickname())
                 .build();
 
-//        // 회원가입 처리하기
-//        Long kakaoId = kakaoAccountDto.getId();
-////        Account existOwner = accountRepository.findById(kakaoId).orElse(null);
-//
-//        // 처음 로그인이 아닌 경우
-//        return Account.builder()
-//                .kakaoId(kakaoAccountDto.getId())
-//                .email(kakaoAccountDto.getKakao_account().getEmail())
-//                .kakaoName(kakaoAccountDto.getKakao_account().getProfile().getNickname())
-//                .build();
     }
 }

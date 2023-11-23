@@ -22,7 +22,7 @@ import java.util.List;
 public class SecurityConfig {
 
     @Value("${server.ip}")
-    private String SERVER_IP;
+    private String serverIp;
 
     private static final String DOMAIN_NAME = "http://welcom2ko.s3-website.ap-northeast-2.amazonaws.com";
 
@@ -32,7 +32,7 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
 
     private String getServerUrl(String port) {
-        return "http://" + SERVER_IP + ":" + port;
+        return "http://" + serverIp + ":" + port;
     }
 
     private CorsConfiguration getCorsConfiguration() {

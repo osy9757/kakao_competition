@@ -1,4 +1,4 @@
-package welcome.travel.dto;
+package welcome.travel.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

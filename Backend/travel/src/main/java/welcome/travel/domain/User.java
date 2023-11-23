@@ -1,10 +1,12 @@
 package welcome.travel.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,9 +19,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table
 public class User implements UserDetails {
-
 
     @Id
     @GeneratedValue
@@ -31,10 +32,9 @@ public class User implements UserDetails {
     private String nickname;
     private String image;
     private String phoneNumber;
-    private Boolean agree_marketing;
-    private Boolean agree_info;
-    private Integer login_type;
-
+    private Boolean agreeMarketing;
+    private Boolean agreeInfo;
+    private Integer loginType;
 
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -47,8 +47,6 @@ public class User implements UserDetails {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
-
-    //==연관관계 편의 메서드==//
 
     @Override
     public String getUsername() {
@@ -75,19 +73,10 @@ public class User implements UserDetails {
         return true;
     }
 
-    //==회원 정보 수정==//
-    public void updateNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public void updatePassword(PasswordEncoder passwordEncoder, String password) {
-        this.password = passwordEncoder.encode(password);
-    }
-
-    public void updateKakao(String phoneNumber, Boolean agree_info, Boolean agree_marketing) {
+    public void updateKakao(String phoneNumber, Boolean agreeInfo, Boolean agreeMarketing) {
         this.phoneNumber = phoneNumber;
-        this.agree_info = agree_info;
-        this.agree_marketing = agree_marketing;
+        this.agreeInfo = agreeInfo;
+        this.agreeMarketing = agreeMarketing;
     }
 
 

@@ -1,4 +1,4 @@
-package welcome.travel.dto;
+package welcome.travel.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,21 +17,18 @@ public class UserSignUpRequestDto {
     @Email
     private String email;
 
-
-    @NotBlank(message = "닉네임을 입력해주세요.")
-    @Size(min = 2, message = "닉네임이 너무 짧습니다.")
+    @NotBlank(message = "닉네임 입력 필수")
+    @Size(min = 2, message = "너무 짧은 닉네임")
     private String nickname;
 
-    @NotBlank(message = "비밀번호를 입력해주세요.")
+    @NotBlank(message = "비밀 번호 입력 필수")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,30}$",
-            message = "비밀번호는 8~30 자리이면서 1개 이상의 알파벳, 숫자, 특수문자를 포함해야합니다.")
+            message = "8~30 자리 이상, 1개 이상의 알파벳, 숫자, 특수 문자 포함")
     private String password;
 
     private String phoneNumber;
 
-    private Boolean agree_marketing;
-    private Boolean agree_info;
-
-
+    private Boolean agreeMarketing;
+    private Boolean agreeInfo;
 
 }
