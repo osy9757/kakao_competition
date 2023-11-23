@@ -1,6 +1,5 @@
 package welcome.travel.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +10,6 @@ import welcome.travel.dto.MessageDto;
 import welcome.travel.dto.SmsConfirmDto;
 import welcome.travel.service.SmsService;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -25,7 +22,7 @@ public class SmsController {
 
     @PostMapping("/sms/send")
     @Operation(summary = "문자 인증", description = "전화 번호 인증 서비스")
-    public SmsConfirmDto sendSms(@RequestBody MessageDto messageDto) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, URISyntaxException, JsonProcessingException {
+    public SmsConfirmDto sendSms(@RequestBody MessageDto messageDto) throws NoSuchAlgorithmException, InvalidKeyException {
         return smsService.sendSms(messageDto);
 
     }
